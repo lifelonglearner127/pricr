@@ -1,0 +1,42 @@
+{
+    "DE": {
+        "name": "Direct Energy",
+        "website": "www.directenergy.com/"
+    },
+    "4CH": {
+        "name": "4 Change Energy",
+        "website": "www.4changeenergy.com/"
+    },
+    "CHAR": {
+        "name": "Chariot Energy",
+        "website": "www.chariotenergy.com/"
+    },
+    "CONS": {
+        "name": "Constellation Energy",
+        "website": "www.constellation.com/"
+    },
+    "TXU": {
+        "name": "TXU Energy",
+        "website": "www.txu.com/"
+    },
+    "TRI": {
+        "name": "TriEagle Energy",
+        "website": "www.trieagleenergy.com/"
+    },
+    "JE": {
+        "name": "Just Energy",
+        "website": "www.justenergy.com"
+    },
+    "GEXA": {
+        "name": "GEXA Energy",
+        "website": "www.gexaenergy.com/"
+    },
+    "REL": {
+        "name": "Reliant Energy",
+        "website": "www.reliant.com/"
+    },
+    "FRT": {
+        "name": "Frontier Utilities",
+        "website": "www.frontierutilities.com/"
+    }
+}

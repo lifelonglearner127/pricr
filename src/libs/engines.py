@@ -131,6 +131,15 @@ class SpiderBase(SpiderInterface):
                 EC.presence_of_element_located((by, identifier)))
         return element
 
+    def wait_until_iframe(
+        self,
+        timeout: int = 15
+    ) -> Optional[WebElement]:
+        element = WebDriverWait(
+            self.client, timeout).until(
+                EC.frame_to_be_available_and_switch_to_it(self.client.find_element_by_xpath('//iframe')))
+        return element
+
     def __str__(self):
         return self.name
 

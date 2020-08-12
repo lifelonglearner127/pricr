@@ -4,7 +4,7 @@ from .direct_energy import DirectEnergySpider
 from .four_change_energy import FourChangeEnergy
 from .chariot_energy import ChariotEnergySpider
 from .cons_energy import ConsEnergySpider
-from .gexa_egergy import GexaEnergySpider
+from .gexa_energy import GexaEnergySpider
 
 
 REP_SPIDER_MAPPING = {

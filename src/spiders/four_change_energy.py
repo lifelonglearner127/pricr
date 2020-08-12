@@ -1,5 +1,5 @@
 import re
-from typing import Tuple
+from typing import Tuple, Generator
 from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
@@ -20,8 +20,7 @@ class FourChangeEnergy(SpiderBase):
         zipcode_element.send_keys(zipcode)
         zipcode_element.send_keys(Keys.ENTER)
 
-    def get_elements(self) -> Tuple[WebElement]:
-        
+    def get_elements(self) -> Generator[Tuple[WebElement], None, None]:
         result = []
         for plan_id in self.plans_section_list:
             container = self.wait_until(plan_id)
@@ -33,7 +32,7 @@ class FourChangeEnergy(SpiderBase):
                 elements = container.find_elements_by_css_selector(
                     'div.card.panel-plan')
             result.extend(elements)
-        return tuple(result)
+        yield tuple(result)
 
     def analyze_element(self, el: WebElement):
         data_product_promo = el.get_attribute('data-product-promo')

@@ -4,7 +4,7 @@ import logging
 from time import sleep
 from shutil import move
 from datetime import datetime
-from typing import List, Tuple, Any, Optional
+from typing import List, Tuple, Any, Optional, Generator
 from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
@@ -26,7 +26,7 @@ class SpiderInterface(object):
     def submit_zipcode(self, zipcode: str) -> None:
         raise NotImplementedError()
 
-    def get_elements(self) -> Tuple[WebElement]:
+    def get_elements(self) -> Generator[Tuple[WebElement], None, None]:
         raise NotImplementedError()
 
     def analyze_element(self, el: WebElement) -> dict:
@@ -74,20 +74,26 @@ class SpiderBase(SpiderInterface):
     def wait_for(self, second: int = 1):
         sleep(second)
 
+    def hook_after_zipcode_submit(self):
+        # NOTE: When you need to do something after zipcode submission
+        pass
+
     def extract(self, zipcode: str) -> List[Entry]:
         self.log("Searching with zip code - %s" % zipcode)
         self.submit_zipcode(zipcode)
-        for element in self.get_elements():
-            entry = self.convert_to_entry(
-                zipcode,
-                self.analyze_element(element)
-            )
-            self.log("Downloading for <%s>..." % entry.product_name)
-            if self.wait_until_download_finish():
-                entry.filename = self.rename_downloaded(
-                    zipcode, entry.product_name
+        self.hook_after_zipcode_submit()
+        for elements in self.get_elements():
+            for element in elements:
+                entry = self.convert_to_entry(
+                    zipcode,
+                    self.analyze_element(element)
                 )
-            self.data.append(entry)
+                self.log("Downloading for <%s>..." % entry.product_name)
+                if self.wait_until_download_finish():
+                    entry.filename = self.rename_downloaded(
+                        zipcode, entry.product_name
+                    )
+                self.data.append(entry)
 
     def rename_downloaded(self, zipcode: str, product_name: str) -> str:
         filename = self._get_last_downloaded_file()

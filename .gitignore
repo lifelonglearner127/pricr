@@ -3,3 +3,5 @@
 downloads/*/*
 *.log
 venv/
+test.py
+debug.json

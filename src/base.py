@@ -44,7 +44,8 @@ class Crawler(object):
 
     def write_to_csv(self, entries: List[Entry]):
         headers = [
-            "Provider", "Zip Code", "Plan Name", "Rate", "Month", "File"]
+            "REP_ID", "ZipCode", "Commodity",
+            "Product Name", "Price", "Term", "Filename"]
         report_filename = os.path.join(self.client.report_path, 'data.csv')
         with open(report_filename, 'w+') as csvfile:
             writer = csv.writer(csvfile)

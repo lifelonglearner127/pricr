@@ -5,6 +5,7 @@ from time import sleep
 from shutil import move
 from datetime import datetime
 from typing import List, Tuple, Any, Optional, Generator
+from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
@@ -132,9 +133,15 @@ class SpiderBase(SpiderInterface):
         by: str = By.ID,
         timeout: int = 15
     ) -> Optional[WebElement]:
-        element = WebDriverWait(
-            self.client, timeout).until(
-                EC.presence_of_element_located((by, identifier)))
+        try:
+            element = WebDriverWait(
+                self.client, timeout).until(
+                    EC.presence_of_element_located((by, identifier)))
+        except TimeoutException as e:
+            self.log(
+                "Can not find element with %s" % identifier,
+                level=logging.ERROR)
+            return None
         return element
 
     def wait_until_iframe(

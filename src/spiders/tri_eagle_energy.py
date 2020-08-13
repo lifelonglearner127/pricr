@@ -6,7 +6,7 @@ from ..libs.engines import SpiderBase
 
 
 class TriEagleEnergySpider(SpiderBase):
-    name = 'TriEnergy'
+    name = 'TriEagle Energy'
     REP_ID = 'TRI'
     base_url = 'http://www.trieagleenergy.com/'
 

@@ -6,7 +6,7 @@ from ..libs.engines import SpiderBase
 
 
 class ConsEnergySpider(SpiderBase):
-    name = 'ConsEnergy'
+    name = 'Constellation Energy'
     REP_ID = 'CONS'
     base_url = 'https://www.constellation.com/'
 

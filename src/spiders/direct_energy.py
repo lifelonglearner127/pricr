@@ -6,7 +6,7 @@ from ..libs.engines import SpiderBase
 
 
 class DirectEnergySpider(SpiderBase):
-    name = 'DirectEnergy'
+    name = 'Direct Energy'
     REP_ID = 'DE'
     base_url = 'https://www.directenergy.com/'
 

@@ -32,7 +32,7 @@ class ConsEnergySpider(SpiderBase):
             elements = container.find_elements_by_css_selector(
                 'div.individual-option-list div.individual-option-main')
         yield tuple(elements)
-
+    
     def analyze_element(self, el: WebElement):
         term_element = el.find_element_by_css_selector(
             'div.individual-option-main ul.individual-options-short-list span.li-text')
@@ -47,10 +47,12 @@ class ConsEnergySpider(SpiderBase):
         product_name = plan_element.text
 
         efl_download_link_element = el.find_element_by_xpath(
-            '//div[@class="individual-docs"]\
-                //a[@ng-href="/bin/residential/Terms_TX?versionNum=01YD6"]'
+            './/div[@class="individual-plan-doc"]/a[1]'
         )
-        efl_download_link_element.click()
+
+        main_client = self.client.current_window_handle
+        self.client.get(efl_download_link_element.get_attribute('href'))
+        self.client.switch_to.window(main_client)
 
         return {
             'term': term,

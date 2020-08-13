@@ -104,6 +104,7 @@ class SpiderBase(SpiderInterface):
             filename,
             os.path.join(self.client.get_pdf_download_path(), new_filename)
         )
+        self.wait_for()
         return new_filename
 
     def _get_last_downloaded_file(self) -> str:
@@ -133,16 +134,9 @@ class SpiderBase(SpiderInterface):
         by: str = By.ID,
         timeout: int = 15
     ) -> Optional[WebElement]:
-        try:
-            element = WebDriverWait(
-                self.client, timeout).until(
-                    EC.presence_of_element_located((by, identifier)))
-        except TimeoutException as e:
-            self.log(
-                "Can not find element with %s" % identifier,
-                level=logging.ERROR)
-            return None
-        return element
+        return WebDriverWait(
+            self.client, timeout).until(
+                EC.element_to_be_clickable((by, identifier)))
 
     def wait_until_iframe(
         self,
@@ -193,3 +187,9 @@ class SpiderBase(SpiderInterface):
         # Wait for a second once again
         self.wait_for()
         return True
+
+    def execute_javascript(self, script_command: str):
+        return self.client.execute_script(script_command)
+
+    def is_element_clickable(self, identifier: str, by: str = By.ID) -> bool:
+        return EC.element_to_be_clickable((by, identifier))

@@ -167,13 +167,10 @@ class TxuEnergy(SpiderBase):
             collapse_details = el.find_element_by_css_selector('div.col-sm-12 a.details.confirm-ignore')
         collapse_details.click()
         collapse_id = collapse_details.get_attribute('data-target').split('#')[1]
-        print(collapse_id)
-        # time.sleep(2)
         efl_download_link_element = el.find_element_by_xpath(
             '//div[@id="{}"]//a[text()="Electricity Facts Label"]'.format(collapse_id))
 
         pdf_url = efl_download_link_element.get_attribute("href")
-        print(pdf_url)
         self.client.get(pdf_url)
 
         return {

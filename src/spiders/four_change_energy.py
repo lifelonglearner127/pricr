@@ -14,22 +14,31 @@ class FourChangeEnergy(SpiderBase):
 
     def submit_zipcode(self, zipcode: str):
         zipcode_element = self.client.find_element_by_xpath(
-            '//form[@id="frmId"]/div[@id="home-rate-finder"]/span[@class="twitter-typeahead"]/input[@name="AddressDisplayValue"]')
+            '//form[@id="frmId"]//input[@name="AddressDisplayValue"]')
         zipcode_element.clear()
         zipcode_element.send_keys(zipcode)
         zipcode_element.send_keys(Keys.ENTER)
 
+    def hook_after_zipcode_submit(self):
+        # NOTE: When you need to do something after zipcode submission
+        pass
+
     def get_elements(self) -> Generator[Tuple[WebElement], None, None]:
         container = self.wait_until('//main[@role="main"]', By.XPATH)
         elements = container.find_elements_by_xpath(
-            '//div[not(contains(@style,"display:none"))][contains(@class, "panel-plan")][contains(@class, "card")]')
+            './/div[not(contains(@style,"display:none"))]' +
+            '[contains(@class, "panel-plan")]' + 
+            '[contains(@class, "card")]'
+        )
         retries = 0
-        while retries < 5 or not elements:
+        while retries < 5 and not elements:
             retries += 1
             elements = container.find_elements_by_xpath(
-            '//div[not(contains(@style,"display:none"))][contains(@class, "panel-plan")][contains(@class, "card")]')
-        result = list(filter(lambda k: k.text != '', elements))
-        yield tuple(result)
+                './/div[not(contains(@style,"display:none"))]' +
+                '[contains(@class, "panel-plan")]' + 
+                '[contains(@class, "card")]'
+            )
+        yield tuple([item for item in elements if item.text])
 
     def analyze_element(self, el: WebElement):
         data_product_promo = el.get_attribute('data-product-promo')
@@ -44,38 +53,31 @@ class FourChangeEnergy(SpiderBase):
                 raise Exception("Term could not match. (%s)" % term)
         else:
             term = '1'
-        
-        try:
-            price_element = el.find_element_by_css_selector(
-                'div.card-body div.modal-body h1')
-        except:
-            price_element = el.find_element_by_css_selector(
-                'div.card-body div.product2.cards_div2 h2')
-        price = price_element.text.split('¢')[0]
 
-        try:
-            plan_element = el.find_element_by_css_selector(
-                'div.card-body div.modal-body h2')
-        except:
-            plan_element = el.find_element_by_css_selector(
-                'div.card-body div.product2.cards_div2 h4')
-        
-        product_name = plan_element.text
+        price_element = el.find_element_by_css_selector(
+            'div.card-body div.modal-body h1' +
+            ',div.card-body div.product2.cards_div2 h2')
+        price = re.search(
+            r'(\d+(\.\d+)?)', price_element.text.split('¢')[0]).groups()[0]
 
-        product_code = el.get_attribute('data-product-code')
+        product_name = el.find_element_by_css_selector(
+            'div.card-body div.modal-body h2' +
+            ',div.card-body div.product2.cards_div2 h4').text
 
-        efl_download_link_element = el.find_element_by_xpath(
-            '//div[@class="modal-footer justify-content-center"]//a[@data-event-action="Click_efl"][@data-product-code="{}"]'.format(product_code))
+        efl_download_link_element = el.find_element_by_css_selector(
+            'div.modal-footer a')
         efl_download_link_element.click()
 
         efl_view_page = self.wait_until_iframe()
         self.client.switch_to_window(self.client.window_handles[1])
 
-        pdf_url = self.client.find_element_by_tag_name('iframe').get_attribute("src")
+        pdf_url = self.client.find_element_by_tag_name(
+            'iframe').get_attribute("src")
         self.client.get(pdf_url)
 
         self.client.close()
         self.client.switch_to_window(self.client.window_handles[0])
+        self.wait_for()
 
         return {
             'term': term,

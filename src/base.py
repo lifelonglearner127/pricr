@@ -44,12 +44,15 @@ class Crawler(object):
         self.wait_downloading()
 
     def write_to_csv(self, entries: List[Entry]):
+        report_filename = os.path.join(self.client.report_path, 'data.csv')
         headers = [
             "REP_ID", "ZipCode", "Commodity", "Product Name", "Price", "Term", "Filename"]
-        report_filename = os.path.join(self.client.report_path, 'data.csv')
-        with open(report_filename, 'w+') as csvfile:
+        if not os.path.isfile(report_filename):
+            with open(report_filename, 'w+') as csvfile:
+                writer = csv.writer(csvfile)
+                writer.writerow(headers)
+        with open(report_filename, 'a') as csvfile:
             writer = csv.writer(csvfile)
-            writer.writerow(headers)
             for entry in entries:
                 writer.writerow(entry.to_row())
 

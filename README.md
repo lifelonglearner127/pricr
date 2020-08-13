@@ -1,6 +1,6 @@
 # Crawler
 
-You just need to enter REP_IDs and zip codes in `runtime.json` file according to the predefined format. Or you can specify the job file as system args
+You just need to enter REP_IDs and zip codes in `src/mocks/all.json` file according to the predefined format. Or you can specify the job file as system args
 ```
 $ python run.py
 ```

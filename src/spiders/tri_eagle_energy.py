@@ -1,5 +1,6 @@
 import re
 from typing import Tuple, Generator
+from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.common.keys import Keys
 from ..libs.engines import SpiderBase
@@ -11,8 +12,7 @@ class TriEagleEnergySpider(SpiderBase):
     base_url = 'http://www.trieagleenergy.com/'
 
     def submit_zipcode(self, zipcode: str):
-        self.wait_for()
-        zipcode_element = self.client.find_element_by_name('ctl00$txtZipCode')
+        zipcode_element = self.wait_until('ctl00_txtZipCode')
         zipcode_element.clear()
         zipcode_element.send_keys(zipcode)
         zipcode_element.send_keys(Keys.ENTER)

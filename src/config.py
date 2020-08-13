@@ -7,4 +7,4 @@ class Config:
     SELENIUM_DRIVER_PATH = os.path.join(BASE_DIR, 'drivers')
     DOWNLOAD_BASE_PATH = os.path.join(BASE_DIR, 'downloads')
     LOG_FILE = os.path.join(BASE_DIR, 'spider.log')
-    DB_PATH = os.path.join(BASE_DIR, 'db')
+    DB_PATH = os.path.join(BASE_DIR, 'src', 'mocks')

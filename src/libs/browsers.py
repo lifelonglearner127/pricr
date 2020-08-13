@@ -3,6 +3,7 @@ User Defined Selenium Browser
 """
 import os
 import csv
+import json
 from datetime import datetime
 from sys import platform
 
@@ -25,6 +26,16 @@ class Browser(webdriver.Chrome):
 
         options = webdriver.ChromeOptions()
 
+        settings = {
+            "recentDestinations": [{
+                "id": "Save as PDF",
+                "origin": "local",
+                "account": "",
+            }],
+            "selectedDestinationId": "Save as PDF",
+            "version": 2
+        }
+
         options.add_argument("--window-size=1200,900")
         options.add_argument('--dns-prefetch-disable')
         options.add_argument('--js-flags="--max_old_space_size=4096"')
@@ -37,7 +48,8 @@ class Browser(webdriver.Chrome):
             "download.prompt_for_download": False,
             "download.directory_upgrade": True,
             "plugins.always_open_pdf_externally": True,
-            "savefile.default_directory": self.get_pdf_download_path()
+            "savefile.default_directory": self.get_pdf_download_path(),
+            "printing.print_preview_sticky_settings.appState": json.dumps(settings)
         }
         options.add_experimental_option("prefs",prefs)
     

@@ -7,6 +7,7 @@ from .txu_energy import TxuEnergy
 from .tri_eagle_energy import TriEagleEnergySpider
 from .cons_energy import ConsEnergySpider
 from .gexa_energy import GexaEnergySpider
+from .reliant import ReliantSpider
 from .just_energy import JustEnergySpider
 
 
@@ -18,5 +19,6 @@ REP_SPIDER_MAPPING = {
     "TRI": TriEagleEnergySpider,
     "CONS": ConsEnergySpider,
     "GEXA": GexaEnergySpider,
-    "JE": JustEnergySpider
+    "REL": ReliantSpider,
+    "JE": JustEnergySpider,
 }

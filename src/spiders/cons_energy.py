@@ -11,7 +11,7 @@ class ConsEnergySpider(SpiderBase):
     base_url = 'https://www.constellation.com/'
 
     def submit_zipcode(self, zipcode: str):
-        zipcode_element = self.client.find_element_by_id('residentialZipCodeText')
+        zipcode_element = self.wait_until('residentialZipCodeText')
         zipcode_element.clear()
         zipcode_element.send_keys(zipcode)
         zipcode_element.send_keys(Keys.ENTER)

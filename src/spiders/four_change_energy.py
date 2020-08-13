@@ -10,7 +10,6 @@ class FourChangeEnergy(SpiderBase):
     name = '4 Change Energy'
     REP_ID = '4CH'
     base_url = 'https://www.4changeenergy.com/'
-    plans_section_list = ['most-popular-section', 'plan-grid-section']
     plans_promo_blacklist = ['No Contract']
 
     def submit_zipcode(self, zipcode: str):
@@ -21,17 +20,15 @@ class FourChangeEnergy(SpiderBase):
         zipcode_element.send_keys(Keys.ENTER)
 
     def get_elements(self) -> Generator[Tuple[WebElement], None, None]:
-        result = []
-        for plan_id in self.plans_section_list:
-            container = self.wait_until(plan_id)
-            elements = container.find_elements_by_css_selector(
-                'div.card.panel-plan')
-            retries = 0
-            while retries < 5 or not elements:
-                retries += 1
-                elements = container.find_elements_by_css_selector(
-                    'div.card.panel-plan')
-            result.extend(elements)
+        container = self.wait_until('//main[@role="main"]', By.XPATH)
+        elements = container.find_elements_by_xpath(
+            '//div[not(contains(@style,"display:none"))][contains(@class, "panel-plan")][contains(@class, "card")]')
+        retries = 0
+        while retries < 5 or not elements:
+            retries += 1
+            elements = container.find_elements_by_xpath(
+            '//div[not(contains(@style,"display:none"))][contains(@class, "panel-plan")][contains(@class, "card")]')
+        result = list(filter(lambda k: k.text != '', elements))
         yield tuple(result)
 
     def analyze_element(self, el: WebElement):
@@ -65,8 +62,10 @@ class FourChangeEnergy(SpiderBase):
         
         product_name = plan_element.text
 
+        product_code = el.get_attribute('data-product-code')
+
         efl_download_link_element = el.find_element_by_xpath(
-            '//*[@class="modal-footer justify-content-center"]//a[@data-event-action="Click_efl"]')
+            '//div[@class="modal-footer justify-content-center"]//a[@data-event-action="Click_efl"][@data-product-code="{}"]'.format(product_code))
         efl_download_link_element.click()
 
         efl_view_page = self.wait_until_iframe()

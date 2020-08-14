@@ -10,6 +10,7 @@ from .gexa_energy import GexaEnergySpider
 from .reliant_energy import ReliantEnergySpider
 from .front_utility import FrontUtilSpider
 from .just_energy import JustEnergySpider
+from .expr_energy import ExprEnergySpider
 
 
 REP_SPIDER_MAPPING = {
@@ -23,4 +24,5 @@ REP_SPIDER_MAPPING = {
     "REL": ReliantEnergySpider,
     "JE": JustEnergySpider,
     "FRT": FrontUtilSpider,
+    "EXPR": ExprEnergySpider,
 }

@@ -24,7 +24,7 @@ class JustEnergySpider(SpiderBase):
         elements = container.find_elements_by_xpath(
             '//app-product-row//div[contains(@class, "product-list-item-v2")]//div[contains(@class, "row")][contains(@class, "tx-title-price-wrapper")][not(contains(@style, "display:none"))]')
         retries = 0
-        while retries < 5 or not elements:
+        while retries < 5 and not elements:
             retries += 1
             elements = container.find_elements_by_xpath(
             '//app-product-row//div[contains(@class, "product-list-item-v2")]//div[contains(@class, "row")][contains(@class, "tx-title-price-wrapper")][not(contains(@style, "display:none"))]')

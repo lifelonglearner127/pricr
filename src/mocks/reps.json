@@ -38,5 +38,53 @@
     "FRT": {
         "name": "Frontier Utilities",
         "website": "www.frontierutilities.com/"
+    },
+    "ACAC": {
+        "name": "Acacia Energy",
+        "website": "https://www.acaciaenergy.com/"
+    },
+    "NOW": {
+        "name": "Now Power",
+        "website": "https://nowpowertexas.com/"
+    },
+    "DSCT": {
+        "name": "Discount Power",
+        "website": "https://www.discountpowertx.com/"
+    },
+    "CIRRO": {
+        "name": "Cirro Energy",
+        "website": "https://www.cirroenergy.com/"
+    },
+    "TEXPO": {
+        "name": "TEXPO Energy",
+        "website": "https://enroll.texpoenergy.com/"
+    },
+    "YEP": {
+        "name": "YEP Energy",
+        "website": "https://enroll.yepenergy.com/"
+    },
+    "SWPL": {
+        "name": "Southwest Power & Light",
+        "website": "https://enroll.southwestpl.com/"
+    },
+    "INFE": {
+        "name": "Infinite Energy",
+        "website": "https://www.infiniteenergy.com/"
+    },
+    "CHMP": {
+        "name": "Chmp Energy",
+        "website": "championenergyservices.com/"
+    },
+    "PSTR": {
+        "name": "Penstar Power",
+        "website": "penstarpower.com/"
+    },
+    "AMBT": {
+        "name": "Ambit Energy",
+        "website": "https://ambitenergy.com/"
+    },
+    "SPRK": {
+        "name": "Spark Energy",
+        "website": "www.sparkenergy.com/"
     }
 }

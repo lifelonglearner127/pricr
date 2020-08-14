@@ -114,7 +114,7 @@ class SpiderBase(SpiderInterface):
         if not files:
             return None
         candiate = max(files, key=os.path.getctime)
-        if candiate.startswith(self.DOWNLOAD_FILE_PREFIX) and\
+        if candiate.startswith(self.DOWNLOAD_FILE_PREFIX) or\
                 candiate.endswith('.crdownload'):
             return None
         else:

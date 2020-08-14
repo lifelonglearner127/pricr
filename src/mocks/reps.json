@@ -38,5 +38,13 @@
     "FRT": {
         "name": "Frontier Utilities",
         "website": "www.frontierutilities.com/"
+    },
+    "CHMP": {
+        "name": "Chmp Energy",
+        "website": "championenergyservices.com/"
+    },
+    "PSTR": {
+        "name": "Penstar Power",
+        "website": "penstarpower.com/"
     }
 }

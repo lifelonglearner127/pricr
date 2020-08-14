@@ -23,6 +23,7 @@ from .penstar_power import PstrPowerSpider
 from .chmp_energy import ChmpEnergySpider
 from .infinite_energy import InfiniteEnergySpider
 from .ambit_energy import AmbitEnergySpider
+from .sprk_energy import SparkEnergySpider
 
 
 REP_SPIDER_MAPPING = {
@@ -49,4 +50,5 @@ REP_SPIDER_MAPPING = {
     "CHMP": ChmpEnergySpider,
     "INFE": InfiniteEnergySpider,
     "AMBT": AmbitEnergySpider,
+    "SPRK": SparkEnergySpider,
 }

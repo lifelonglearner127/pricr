@@ -82,5 +82,9 @@
     "AMBT": {
         "name": "Ambit Energy",
         "website": "https://ambitenergy.com/"
+    },
+    "SPRK": {
+        "name": "Spark Energy",
+        "website": "www.sparkenergy.com/"
     }
 }

@@ -66,5 +66,9 @@
     "SWPL": {
         "name": "Southwest Power & Light",
         "website": "https://enroll.southwestpl.com/"
+    },
+    "INFE": {
+        "name": "Infinite Energy",
+        "website": "https://www.infiniteenergy.com/"
     }
 }

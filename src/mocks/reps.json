@@ -38,5 +38,17 @@
     "FRT": {
         "name": "Frontier Utilities",
         "website": "www.frontierutilities.com/"
+    },
+    "ACAC": {
+        "name": "Acacia Energy",
+        "website": "https://www.acaciaenergy.com/"
+    },
+    "NOW": {
+        "name": "Now Power",
+        "website": "https://nowpowertexas.com/"
+    },
+    "DSCT": {
+        "name": "Discount Power",
+        "website": "https://www.discountpowertx.com/"
     }
 }

@@ -11,6 +11,8 @@ from .reliant_energy import ReliantEnergySpider
 from .front_utility import FrontUtilSpider
 from .just_energy import JustEnergySpider
 from .expr_energy import ExprEnergySpider
+from .acacia_energy import AcaciaEnergySpider, NowPowerSpider
+from .discount_power import DiscountPower
 
 
 REP_SPIDER_MAPPING = {
@@ -25,4 +27,7 @@ REP_SPIDER_MAPPING = {
     "JE": JustEnergySpider,
     "FRT": FrontUtilSpider,
     "EXPR": ExprEnergySpider,
+    "ACAC": AcaciaEnergySpider,
+    "NOW": NowPowerSpider,
+    "DSCT": DiscountPower,
 }

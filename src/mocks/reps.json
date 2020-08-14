@@ -70,5 +70,13 @@
     "INFE": {
         "name": "Infinite Energy",
         "website": "https://www.infiniteenergy.com/"
+    },
+    "CHMP": {
+        "name": "Chmp Energy",
+        "website": "championenergyservices.com/"
+    },
+    "PSTR": {
+        "name": "Penstar Power",
+        "website": "penstarpower.com/"
     }
 }

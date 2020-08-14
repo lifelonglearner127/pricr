@@ -11,6 +11,8 @@ from .reliant_energy import ReliantEnergySpider
 from .front_utility import FrontUtilSpider
 from .just_energy import JustEnergySpider
 from .expr_energy import ExprEnergySpider
+from .pstr_power import PstrPowerSpider
+from .chmp_energy import ChmpEnergySpider
 
 
 REP_SPIDER_MAPPING = {
@@ -25,4 +27,6 @@ REP_SPIDER_MAPPING = {
     "JE": JustEnergySpider,
     "FRT": FrontUtilSpider,
     "EXPR": ExprEnergySpider,
+    "PSTR": PstrPowerSpider,
+    "CHMP": ChmpEnergySpider,
 }

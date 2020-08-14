@@ -11,6 +11,9 @@ from .reliant_energy import ReliantEnergySpider
 from .front_utility import FrontUtilSpider
 from .just_energy import JustEnergySpider
 from .expr_energy import ExprEnergySpider
+from .texpo_yep_swpl_spider import TexpoEnergySpider, \
+                                   YepSpider, \
+                                   SouthwestPLSpider
 
 
 REP_SPIDER_MAPPING = {
@@ -25,4 +28,7 @@ REP_SPIDER_MAPPING = {
     "JE": JustEnergySpider,
     "FRT": FrontUtilSpider,
     "EXPR": ExprEnergySpider,
+    "TEXPO": TexpoEnergySpider,
+    "YEP": YepSpider,
+    "SWPL": SouthwestPLSpider,
 }

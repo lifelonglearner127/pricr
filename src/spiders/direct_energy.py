@@ -22,7 +22,7 @@ class DirectEnergySpider(SpiderBase):
         elements = container.find_elements_by_css_selector(
             'div.grid-card div.card')
         retries = 0
-        while retries < 5 or not elements:
+        while retries < 5 and not elements:
             retries += 1
             elements = container.find_elements_by_css_selector(
                 'div.grid-card div.card')

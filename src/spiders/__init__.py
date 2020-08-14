@@ -22,6 +22,7 @@ from .south_west_pnl import SouthwestPLSpider
 from .penstar_power import PstrPowerSpider
 from .chmp_energy import ChmpEnergySpider
 from .infinite_energy import InfiniteEnergySpider
+from .ambit_energy import AmbitEnergySpider
 
 
 REP_SPIDER_MAPPING = {
@@ -47,4 +48,5 @@ REP_SPIDER_MAPPING = {
     "PSTR": PstrPowerSpider,
     "CHMP": ChmpEnergySpider,
     "INFE": InfiniteEnergySpider,
+    "AMBT": AmbitEnergySpider,
 }

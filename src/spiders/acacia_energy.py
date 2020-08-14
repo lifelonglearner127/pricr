@@ -79,9 +79,3 @@ class AcaciaEnergySpider(AcaciaOrNowBaseSpider):
     name = 'Acacia Energy'
     REP_ID = 'ACAC'
     base_url = 'https://www.acaciaenergy.com/'
-
-
-class NowPowerSpider(AcaciaOrNowBaseSpider):
-    name = 'Now Power'
-    REP_ID = 'NOW'
-    base_url = 'https://nowpowertexas.com/'

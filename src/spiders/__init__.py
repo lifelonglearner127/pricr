@@ -11,7 +11,8 @@ from .reliant_energy import ReliantEnergySpider
 from .front_utility import FrontUtilSpider
 from .just_energy import JustEnergySpider
 from .expr_energy import ExprEnergySpider
-from .acacia_energy import AcaciaEnergySpider, NowPowerSpider
+from .acacia_energy import AcaciaEnergySpider
+from .now_power import NowPowerSpider
 from .discount_power import DiscountPower
 from .chmp_energy import ChmpEnergySpider
 

@@ -19,6 +19,8 @@ from .chmp_energy import ChmpEnergySpider
 from .texpo_energy import TexpoEnergySpider
 from .yep_energy import YepSpider
 from .south_west_pnl import SouthwestPLSpider
+# from .pstr_power import PstrPowerSpider
+from .chmp_energy import ChmpEnergySpider
 
 
 REP_SPIDER_MAPPING = {
@@ -41,4 +43,6 @@ REP_SPIDER_MAPPING = {
     "TEXPO": TexpoEnergySpider,
     "YEP": YepSpider,
     "SWPL": SouthwestPLSpider,
+    # "PSTR": PstrPowerSpider,
+    "CHMP": ChmpEnergySpider,
 }

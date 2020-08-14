@@ -79,20 +79,20 @@ class ChmpEnergySpider(SpiderBase):
         self.client.execute_script("arguments[0].click();", detail_link)
 
         modal = self.wait_until(
-            './/div[@id="modalPromptPN4848"]',
+            './/div[@id="dnn_ContentPane"]',
             by=By.XPATH
         )
         detail_btn = modal.find_element_by_xpath(
             './/li[2]/a'
         )
-        detail_btn.click()
+        self.client.execute_script("arguments[0].click();", detail_btn)
         efl_element = modal.find_element_by_xpath(
-            '//div[@id="modalPromptPN4855"]//fieldset[4]//span//div[2]/a'
+            '//div[@id="dnn_ContentPane"]//fieldset[4]//span//div[2]/a'
         )
         self.client.execute_script("arguments[0].click();", efl_element)
         close_btn = modal.find_element_by_xpath(
             '//div[@class="modal-footer"]//button')
-        close_btn.click()
+        self.client.execute_script("arguments[0].click();", close_btn)
 
         return {
             'term': term,

@@ -1,14 +1,26 @@
 from typing import Tuple
 from src.libs.engines import SpiderInterface
 from .direct_energy import DirectEnergySpider
-
-
-def get_available_spiders() -> Tuple[SpiderInterface.__class__]:
-    return (
-        DirectEnergySpider,
-    )
+from .four_change_energy import FourChangeEnergy
+from .chariot_energy import ChariotEnergySpider
+from .txu_energy import TxuEnergy
+from .tri_eagle_energy import TriEagleEnergySpider
+from .cons_energy import ConsEnergySpider
+from .gexa_energy import GexaEnergySpider
+from .reliant_energy import ReliantEnergySpider
+from .front_utility import FrontUtilSpider
+from .just_energy import JustEnergySpider
 
 
 REP_SPIDER_MAPPING = {
-    "DE": DirectEnergySpider
+    "DE": DirectEnergySpider,
+    "4CH": FourChangeEnergy,
+    "CHAR": ChariotEnergySpider,
+    "TXU": TxuEnergy,
+    "TRI": TriEagleEnergySpider,
+    "CONS": ConsEnergySpider,
+    "GEXA": GexaEnergySpider,
+    "REL": ReliantEnergySpider,
+    "JE": JustEnergySpider,
+    "FRT": FrontUtilSpider,
 }

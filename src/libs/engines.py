@@ -4,7 +4,8 @@ import logging
 from time import sleep
 from shutil import move
 from datetime import datetime
-from typing import List, Tuple, Any, Optional
+from typing import List, Tuple, Any, Optional, Generator
+from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
@@ -26,7 +27,7 @@ class SpiderInterface(object):
     def submit_zipcode(self, zipcode: str) -> None:
         raise NotImplementedError()
 
-    def get_elements(self) -> Tuple[WebElement]:
+    def get_elements(self) -> Generator[Tuple[WebElement], None, None]:
         raise NotImplementedError()
 
     def analyze_element(self, el: WebElement) -> dict:
@@ -74,20 +75,26 @@ class SpiderBase(SpiderInterface):
     def wait_for(self, second: int = 1):
         sleep(second)
 
+    def hook_after_zipcode_submit(self):
+        # NOTE: When you need to do something after zipcode submission
+        pass
+
     def extract(self, zipcode: str) -> List[Entry]:
         self.log("Searching with zip code - %s" % zipcode)
         self.submit_zipcode(zipcode)
-        for element in self.get_elements():
-            entry = self.convert_to_entry(
-                zipcode,
-                self.analyze_element(element)
-            )
-            self.log("Downloading for <%s>..." % entry.product_name)
-            if self.wait_until_download_finish():
-                entry.filename = self.rename_downloaded(
-                    zipcode, entry.product_name
+        self.hook_after_zipcode_submit()
+        for elements in self.get_elements():
+            for element in elements:
+                entry = self.convert_to_entry(
+                    zipcode,
+                    self.analyze_element(element)
                 )
-            self.data.append(entry)
+                self.log("Downloading for <%s>..." % entry.product_name)
+                if self.wait_until_download_finish():
+                    entry.filename = self.rename_downloaded(
+                        zipcode, entry.product_name
+                    )
+                self.data.append(entry)
 
     def rename_downloaded(self, zipcode: str, product_name: str) -> str:
         filename = self._get_last_downloaded_file()
@@ -97,6 +104,7 @@ class SpiderBase(SpiderInterface):
             filename,
             os.path.join(self.client.get_pdf_download_path(), new_filename)
         )
+        self.wait_for()
         return new_filename
 
     def _get_last_downloaded_file(self) -> str:
@@ -126,9 +134,17 @@ class SpiderBase(SpiderInterface):
         by: str = By.ID,
         timeout: int = 15
     ) -> Optional[WebElement]:
+        return WebDriverWait(
+            self.client, timeout).until(
+                EC.element_to_be_clickable((by, identifier)))
+
+    def wait_until_iframe(
+        self,
+        timeout: int = 15
+    ) -> Optional[WebElement]:
         element = WebDriverWait(
             self.client, timeout).until(
-                EC.presence_of_element_located((by, identifier)))
+                EC.frame_to_be_available_and_switch_to_it(self.client.find_element_by_xpath('//iframe')))
         return element
 
     def __str__(self):
@@ -171,3 +187,9 @@ class SpiderBase(SpiderInterface):
         # Wait for a second once again
         self.wait_for()
         return True
+
+    def execute_javascript(self, script_command: str):
+        return self.client.execute_script(script_command)
+
+    def is_element_clickable(self, identifier: str, by: str = By.ID) -> bool:
+        return EC.element_to_be_clickable((by, identifier))

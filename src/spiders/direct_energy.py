@@ -1,12 +1,12 @@
 import re
-from typing import Tuple
+from typing import Tuple, Generator
 from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.common.keys import Keys
 from ..libs.engines import SpiderBase
 
 
 class DirectEnergySpider(SpiderBase):
-    name = 'DirectEnergy'
+    name = 'Direct Energy'
     REP_ID = 'DE'
     base_url = 'https://www.directenergy.com/'
 
@@ -17,7 +17,7 @@ class DirectEnergySpider(SpiderBase):
         zipcode_element.send_keys(zipcode)
         zipcode_element.send_keys(Keys.ENTER)
 
-    def get_elements(self) -> Tuple[WebElement]:
+    def get_elements(self) -> Generator[Tuple[WebElement], None, None]:
         container = self.wait_until('eplans')
         elements = container.find_elements_by_css_selector(
             'div.grid-card div.card')
@@ -26,7 +26,7 @@ class DirectEnergySpider(SpiderBase):
             retries += 1
             elements = container.find_elements_by_css_selector(
                 'div.grid-card div.card')
-        return tuple(elements)
+        yield tuple(elements)
 
     def analyze_element(self, el: WebElement):
         term_element = el.find_element_by_css_selector(

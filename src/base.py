@@ -3,6 +3,7 @@ import csv
 import time
 from warnings import warn
 from typing import List, Tuple, Dict
+from src.config import Config
 from src.libs.browsers import Browser
 from src.libs.models import Entry
 from src.spiders import REP_SPIDER_MAPPING, SpiderInterface
@@ -43,12 +44,15 @@ class Crawler(object):
         self.wait_downloading()
 
     def write_to_csv(self, entries: List[Entry]):
-        headers = [
-            "Provider", "Zip Code", "Plan Name", "Rate", "Month", "File"]
         report_filename = os.path.join(self.client.report_path, 'data.csv')
-        with open(report_filename, 'w+') as csvfile:
+        headers = [
+            "REP_ID", "ZipCode", "Commodity", "Product Name", "Price", "Term", "Filename"]
+        if not os.path.isfile(report_filename):
+            with open(report_filename, 'w+') as csvfile:
+                writer = csv.writer(csvfile)
+                writer.writerow(headers)
+        with open(report_filename, 'a') as csvfile:
             writer = csv.writer(csvfile)
-            writer.writerow(headers)
             for entry in entries:
                 writer.writerow(entry.to_row())
 
@@ -58,8 +62,11 @@ class Crawler(object):
     def manage_spider_failure(self, spider: SpiderInterface, e: Exception):
         # TODO: Here, we should manage spider error case.
         # It can send email or SMS
-        print("%s failed to scrap data." % spider.name)
-        print(e)
+        if Config.DEBUG:
+            raise e
+        else:
+            print("%s failed to scrap data." % spider.name)
+            print(e)
 
     def wait_downloading(self):
         # NOTE: Need to wait until downloading is finished.

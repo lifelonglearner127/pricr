@@ -36,7 +36,7 @@ class PstrPowerSpider(SpiderBase):
             term = match.group()
         else:
             term = 1
-        self.wait_for()
+        self.wait_for(3)
         price_element = el.find_element_by_xpath('.//div[@class="price-container"]//span')
         price = re.search(r'(\d+(\.\d+)?)', price_element.text).group()
 

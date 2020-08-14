@@ -1,7 +1,7 @@
-from .acacia_energy import AcaciaOrNowBaseSpider
+from .acacia_energy import AcaciaStyleSpiderBase
 
 
-class NowPowerSpider(AcaciaOrNowBaseSpider):
+class NowPowerSpider(AcaciaStyleSpiderBase):
     name = 'Now Power'
     REP_ID = 'NOW'
     base_url = 'https://nowpowertexas.com/'

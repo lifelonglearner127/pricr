@@ -6,8 +6,7 @@ from ..libs.engines import SpiderBase
 from src.libs.models import Entry
 
 
-class TexpoYepSwplBaseSpider(SpiderBase):
-
+class TexpoStyleSpiderBase(SpiderBase):
     def submit_zipcode(self, zipcode: str):
         zipcode_element = self.wait_until("landingPageZipCode")
         zipcode_element.clear()
@@ -44,10 +43,9 @@ class TexpoYepSwplBaseSpider(SpiderBase):
                     )
                 self.data.append(entry)
 
-    def get_elements(self) -> Generator[Dict[WebElement, WebElement],
-                                        None,
-                                        None]:
-
+    def get_elements(
+        self
+    ) -> Generator[Dict[WebElement, WebElement], None, None]:
         # Click all rate plans button
         self.wait_until('allRateplanButton').click()
         container = self.wait_until('ratePlan-container', By.CLASS_NAME)
@@ -88,7 +86,6 @@ class TexpoYepSwplBaseSpider(SpiderBase):
             'div.text-center span:nth-child(1) a'
         ).get_attribute("href")
         self.client.get(efl_pdf_url)
-        print(efl_pdf_url)
 
         expand_btn_element.click()
 
@@ -99,19 +96,7 @@ class TexpoYepSwplBaseSpider(SpiderBase):
         }
 
 
-class TexpoEnergySpider(TexpoYepSwplBaseSpider):
+class TexpoEnergySpider(TexpoStyleSpiderBase):
     name = 'TEXPO Energy'
     REP_ID = 'TEXPO'
     base_url = 'https://enroll.texpoenergy.com/rateplans/'
-
-
-class YepSpider(TexpoYepSwplBaseSpider):
-    name = 'YEP'
-    REP_ID = 'YEP'
-    base_url = 'https://enroll.yepenergy.com/rateplans/'
-
-
-class SouthwestPLSpider(TexpoYepSwplBaseSpider):
-    name = 'Southwest P&L'
-    REP_ID = 'SWPL'
-    base_url = 'https://enroll.southwestpl.com/'

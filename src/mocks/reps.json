@@ -50,5 +50,17 @@
     "DSCT": {
         "name": "Discount Power",
         "website": "https://www.discountpowertx.com/"
+    },
+    "TEXPO": {
+        "name": "TEXPO Energy",
+        "website": "https://enroll.texpoenergy.com/"
+    },
+    "YEP": {
+        "name": "YEP Energy",
+        "website": "https://enroll.yepenergy.com/"
+    },
+    "SWPL": {
+        "name": "Southwest Power & Light",
+        "website": "https://enroll.southwestpl.com/"
     }
 }

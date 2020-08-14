@@ -5,7 +5,7 @@ from selenium.webdriver.common.by import By
 from ..libs.engines import SpiderBase
 
 
-class AcaciaOrNowBaseSpider(SpiderBase):
+class AcaciaStyleSpiderBase(SpiderBase):
     def submit_zipcode(self, zipcode: str):
         zipcode_element = self.wait_until(
             '//input[@class="form-control zip-text"]',
@@ -75,7 +75,7 @@ class AcaciaOrNowBaseSpider(SpiderBase):
         }
 
 
-class AcaciaEnergySpider(AcaciaOrNowBaseSpider):
+class AcaciaEnergySpider(AcaciaStyleSpiderBase):
     name = 'Acacia Energy'
     REP_ID = 'ACAC'
     base_url = 'https://www.acaciaenergy.com/'

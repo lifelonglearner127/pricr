@@ -15,9 +15,9 @@ from .acacia_energy import AcaciaEnergySpider
 from .now_power import NowPowerSpider
 from .discount_power import DiscountPower
 from .chmp_energy import ChmpEnergySpider
-from .texpo_yep_swpl_spider import TexpoEnergySpider, \
-                                   YepSpider, \
-                                   SouthwestPLSpider
+from .texpo_energy import TexpoEnergySpider
+from .yep_energy import YepSpider
+from .south_west_pnl import SouthwestPLSpider
 
 
 REP_SPIDER_MAPPING = {

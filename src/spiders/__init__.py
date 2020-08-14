@@ -14,6 +14,7 @@ from .expr_energy import ExprEnergySpider
 from .acacia_energy import AcaciaEnergySpider
 from .now_power import NowPowerSpider
 from .discount_power import DiscountPower
+from .cirro_engergy import CirroEnergySpider
 from .chmp_energy import ChmpEnergySpider
 from .texpo_energy import TexpoEnergySpider
 from .yep_energy import YepSpider
@@ -35,6 +36,7 @@ REP_SPIDER_MAPPING = {
     "ACAC": AcaciaEnergySpider,
     "NOW": NowPowerSpider,
     "DSCT": DiscountPower,
+    "CIRRO": CirroEnergySpider,
     "CHMP": ChmpEnergySpider,
     "TEXPO": TexpoEnergySpider,
     "YEP": YepSpider,

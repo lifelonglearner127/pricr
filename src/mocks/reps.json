@@ -78,5 +78,9 @@
     "PSTR": {
         "name": "Penstar Power",
         "website": "penstarpower.com/"
+    },
+    "AMBT": {
+        "name": "Ambit Energy",
+        "website": "https://ambitenergy.com/"
     }
 }

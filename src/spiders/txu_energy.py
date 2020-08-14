@@ -76,7 +76,7 @@ class TxuEnergy(SpiderBase):
         elements = container.find_elements_by_css_selector(
             'div.row.ng-scope')
         retries = 0
-        while retries < 5 or not elements:
+        while retries < 5 and not elements:
             retries += 1
             elements = container.find_elements_by_css_selector(
                 'div.row.ng-scope')
@@ -95,7 +95,7 @@ class TxuEnergy(SpiderBase):
             more_plans = show_more_modal.find_elements_by_css_selector(
                 'div.row')
             retries = 0
-            while retries < 5 or not more_plans:
+            while retries < 5 and not more_plans:
                 retries += 1
                 more_plans = show_more_modal.find_elements_by_css_selector(
                     'section.plans div.row')

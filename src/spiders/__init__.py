@@ -26,6 +26,7 @@ from .ambit_energy import AmbitEnergySpider
 from .spark_energy import SparkEnergySpider
 from .cpl_retail_energy import CplEnergySpider
 from .think_energy import ThinkEnergySpider
+from .grid_plus_energy import GridPlusEnergySpider
 
 
 REP_SPIDER_MAPPING = {
@@ -54,4 +55,5 @@ REP_SPIDER_MAPPING = {
     "SPRK": SparkEnergySpider,
     "CPL": CplEnergySpider,
     "THINK": ThinkEnergySpider,
+    "GRID": GridPlusEnergySpider,
 }

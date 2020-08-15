@@ -29,6 +29,7 @@ from .think_energy import ThinkEnergySpider
 from .grid_plus_energy import GridPlusEnergySpider
 from .wtu_energy import WTUEnergySpider
 from .first_choice_power import FirstChoicePowerSpider
+from .pogo_energy import PogoEnergy
 
 
 REP_SPIDER_MAPPING = {
@@ -61,4 +62,5 @@ REP_SPIDER_MAPPING = {
     "WTU": WTUEnergySpider,
     "GRID": GridPlusEnergySpider,
     "FST": FirstChoicePowerSpider,
+    "POGO": PogoEnergy,
 }

@@ -110,5 +110,25 @@
     "POGO": {
         "name": "Pogo Energy",
         "website": "https://my.pogoenergy.com/"
+    },
+    "PLSE": {
+        "name": "Pulse Energy",
+        "website": "www.pulsepowertexas.com/"
+    },
+    "E2GO": {
+        "name": "Energty ToGo",
+        "website": "myenergytogo.com/"
+    },
+    "LSTR": {
+        "name": "Lonestar Energy",
+        "website": "lonestarenergytx.com/"
+    },
+    "NEWP": {
+        "name": "New Power Energy",
+        "website": "newpowertx.com/"
+    },
+    "PWRN": {
+        "name": "Power Next",
+        "website": "mypowernext.com/"
     }
 }

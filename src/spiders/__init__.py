@@ -30,6 +30,11 @@ from .grid_plus_energy import GridPlusEnergySpider
 from .wtu_energy import WTUEnergySpider
 from .first_choice_power import FirstChoicePowerSpider
 from .pogo_energy import PogoEnergy
+from .pulse_energy import PulseEnergySpider
+from .energy_togo import EnergyToGoSpider
+from .lonestar_energy import LSTREnergySpider
+from .new_power_spider import NewPowerEnergySpider
+from .power_newx import PowerNextSpider
 
 
 REP_SPIDER_MAPPING = {
@@ -63,4 +68,9 @@ REP_SPIDER_MAPPING = {
     "GRID": GridPlusEnergySpider,
     "FST": FirstChoicePowerSpider,
     "POGO": PogoEnergy,
+    "PLSE": PulseEnergySpider,
+    "E2GO": EnergyToGoSpider,
+    "LSTR": LSTREnergySpider,
+    "NEWP": NewPowerEnergySpider,
+    "PWRN": PowerNextSpider,
 }

@@ -98,5 +98,9 @@
     "GPLUS": {
         "name": "GRID Plus Energy",
         "website": "grid-enroll.smartgridcis.net/"
+    },
+    "WTU": {
+        "name": "WTU Energy",
+        "website": "www.wturetailenergy.com/"
     }
 }

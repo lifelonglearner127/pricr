@@ -24,6 +24,7 @@ from .chmp_energy import ChmpEnergySpider
 from .infinite_energy import InfiniteEnergySpider
 from .ambit_energy import AmbitEnergySpider
 from .spark_energy import SparkEnergySpider
+from .cpl_retail_energy import CplEnergySpider
 
 
 REP_SPIDER_MAPPING = {
@@ -51,4 +52,5 @@ REP_SPIDER_MAPPING = {
     "INFE": InfiniteEnergySpider,
     "AMBT": AmbitEnergySpider,
     "SPRK": SparkEnergySpider,
+    "CPL": CplEnergySpider,
 }

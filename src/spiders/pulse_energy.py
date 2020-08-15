@@ -85,7 +85,6 @@ class PulseEnergySpider(SpiderBase):
 
         efl_download_link_element = el.find_element_by_xpath(
             './/div[@class="padding"]/div[2]//a[1]')
-        print(efl_download_link_element.get_attribute('href'))
         self.__download_html_to_pdf(efl_download_link_element)
 
         return {

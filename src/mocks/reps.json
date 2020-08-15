@@ -102,5 +102,9 @@
     "WTU": {
         "name": "WTU Energy",
         "website": "www.wturetailenergy.com/"
+    },
+    "FST": {
+        "name": "First Choice Power",
+        "website": "https://www.firstchoicepower.com/"
     }
 }

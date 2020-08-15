@@ -33,8 +33,7 @@ class CplEnergySpider(SpiderBase):
 
     def get_elements(self) -> Generator[Tuple[WebElement], None, None]:
         container = self.wait_until('viewAllGrid', by=By.ID)
-        elements = container.find_elements_by_xpath(
-            '//div[@id="tab_23"]//div[@class="plan-box"]')
+        elements = container.find_elements_by_class_name('plan-box')
         retries = 0
         while retries < 5 and not elements:
             retries += 1
@@ -60,6 +59,7 @@ class CplEnergySpider(SpiderBase):
         efl_element = el.find_element_by_xpath(
             './/div[@class="gridPlanLinks"]/a[3]')
         self.client.execute_script("arguments[0].click();", efl_element)
+        self.wait_for(2)
         
         return {
             'term': term,

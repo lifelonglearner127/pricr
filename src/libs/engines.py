@@ -108,23 +108,28 @@ class SpiderBase(SpiderInterface):
         return new_filename
 
     def _get_last_downloaded_file(self) -> str:
-        if not max(
-            [
-                self.client.get_pdf_download_path() + '/' + f
-                for f in os.listdir(self.client.get_pdf_download_path())
-                if not f.startswith(self.DOWNLOAD_FILE_PREFIX) and
-                    not f.endswith('.crdownload')
-            ], key=os.path.getctime
-        ):
+        retries = 0
+        downloaded_files = self.get_downloaded_files()
+        while retries < 3:
+            if len(downloaded_files) > 0:
+                break
+            else:
+                downloaded_files = self.get_downloaded_files()
+            self.wait_for()
+            retries += 1
+
+        if len(downloaded_files) == 0 or \
+                not max(downloaded_files, key=os.path.getctime):
             return None
-        return max(
-            [
-                self.client.get_pdf_download_path() + '/' + f
-                for f in os.listdir(self.client.get_pdf_download_path())
-                if not f.startswith(self.DOWNLOAD_FILE_PREFIX) and
-                    not f.endswith('.crdownload')
-            ], key=os.path.getctime
-        )
+        return max(downloaded_files, key=os.path.getctime)
+
+    def get_downloaded_files(self) -> List:
+        return [
+            self.client.get_pdf_download_path() + '/' + f
+            for f in os.listdir(self.client.get_pdf_download_path())
+            if not f.startswith(self.DOWNLOAD_FILE_PREFIX) and
+            not f.endswith('.crdownload')
+        ]
 
     def run(self, zipcodes: List[str]) -> List[Entry]:
         for zipcode in zipcodes:
@@ -151,7 +156,8 @@ class SpiderBase(SpiderInterface):
     ) -> Optional[WebElement]:
         element = WebDriverWait(
             self.client, timeout).until(
-                EC.frame_to_be_available_and_switch_to_it(self.client.find_element_by_xpath('//iframe')))
+                EC.frame_to_be_available_and_switch_to_it(
+                    self.client.find_element_by_xpath('//iframe')))
         return element
 
     def __str__(self):
@@ -186,7 +192,9 @@ class SpiderBase(SpiderInterface):
             retries += 1
             current_size = self.__get_size(current_filename)
             if retries > MAX_RETRIES:
-                self.log("Failed to download! Skipping...", level=logging.ERROR)
+                self.log(
+                    "Failed to download! Skipping...",
+                    level=logging.ERROR)
                 return False
 
             # Keep waiting longer and longer

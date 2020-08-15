@@ -20,7 +20,6 @@ from .texpo_energy import TexpoEnergySpider
 from .yep_energy import YepSpider
 from .south_west_pnl import SouthwestPLSpider
 from .penstar_power import PstrPowerSpider
-from .chmp_energy import ChmpEnergySpider
 from .infinite_energy import InfiniteEnergySpider
 from .ambit_energy import AmbitEnergySpider
 from .spark_energy import SparkEnergySpider
@@ -29,6 +28,8 @@ from .think_energy import ThinkEnergySpider
 from .grid_plus_energy import GridPlusEnergySpider
 from .wtu_energy import WTUEnergySpider
 from .apge_energy import APGESpider
+from .first_choice_power import FirstChoicePowerSpider
+from .pogo_energy import PogoEnergy
 
 
 REP_SPIDER_MAPPING = {
@@ -59,5 +60,8 @@ REP_SPIDER_MAPPING = {
     "THINK": ThinkEnergySpider,
     "GPLUS": GridPlusEnergySpider,
     "WTU": WTUEnergySpider,
-    "APGE": APGESpider
+    "APGE": APGESpider,
+    "GRID": GridPlusEnergySpider,
+    "FST": FirstChoicePowerSpider,
+    "POGO": PogoEnergy,
 }

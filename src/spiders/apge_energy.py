@@ -77,6 +77,7 @@ class APGESpider(SpiderBase):
 
     def analyze_element(self, el: WebElement, el_detail: WebElement):
         el.click()
+        self.wait_for(2)
         term_element = el_detail.find_element_by_css_selector(
             'div.row > div.col-sm-4 > div.list-group' +
             ' > span.list-group-item:nth-child(1) > span:nth-child(2)')
@@ -87,7 +88,8 @@ class APGESpider(SpiderBase):
         price = price_element.text.split('¢')[0]
 
         plan_element = el.find_element_by_css_selector(
-            'div.row > div.offer-col span.offer-name')
+            'div.row > div.offer-col:not([style*="display: none"])' +
+            ' span.offer-name')
         product_name = plan_element.text
 
         efl_download_link_element = el_detail.find_element_by_css_selector(

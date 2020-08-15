@@ -25,6 +25,7 @@ from .infinite_energy import InfiniteEnergySpider
 from .ambit_energy import AmbitEnergySpider
 from .spark_energy import SparkEnergySpider
 from .pulse_energy import PulseEnergySpider
+from .energy_togo import EnergyToGoSpider
 
 
 REP_SPIDER_MAPPING = {
@@ -52,4 +53,5 @@ REP_SPIDER_MAPPING = {
     "AMBT": AmbitEnergySpider,
     "SPRK": SparkEnergySpider,
     "PLSE": PulseEnergySpider,
+    "E2GO": EnergyToGoSpider,
 }

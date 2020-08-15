@@ -90,5 +90,9 @@
     "PLSE": {
         "name": "Pulse Energy",
         "website": "www.pulsepowertexas.com/"
+    },
+    "E2GO": {
+        "name": "Energty ToGo",
+        "website": "myenergytogo.com/"
     }
 }

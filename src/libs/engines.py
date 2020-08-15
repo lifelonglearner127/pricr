@@ -111,14 +111,14 @@ class SpiderBase(SpiderInterface):
         retries = 0
         downloaded_files = self.get_downloaded_files()
         while retries < 3:
-            if downloaded_files.count() > 0:
+            if len(downloaded_files) > 0:
                 break
             else:
                 downloaded_files = self.get_downloaded_files()
             self.wait_for()
             retries += 1
 
-        if downloaded_files.count() == 0 or \
+        if len(downloaded_files) == 0 or \
                 not max(downloaded_files, key=os.path.getctime):
             return None
         return max(downloaded_files, key=os.path.getctime)
@@ -156,7 +156,8 @@ class SpiderBase(SpiderInterface):
     ) -> Optional[WebElement]:
         element = WebDriverWait(
             self.client, timeout).until(
-                EC.frame_to_be_available_and_switch_to_it(self.client.find_element_by_xpath('//iframe')))
+                EC.frame_to_be_available_and_switch_to_it(
+                    self.client.find_element_by_xpath('//iframe')))
         return element
 
     def __str__(self):
@@ -191,7 +192,9 @@ class SpiderBase(SpiderInterface):
             retries += 1
             current_size = self.__get_size(current_filename)
             if retries > MAX_RETRIES:
-                self.log("Failed to download! Skipping...", level=logging.ERROR)
+                self.log(
+                    "Failed to download! Skipping...",
+                    level=logging.ERROR)
                 return False
 
             # Keep waiting longer and longer

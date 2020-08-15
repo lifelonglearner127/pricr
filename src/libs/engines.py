@@ -108,23 +108,28 @@ class SpiderBase(SpiderInterface):
         return new_filename
 
     def _get_last_downloaded_file(self) -> str:
-        if not max(
-            [
-                self.client.get_pdf_download_path() + '/' + f
-                for f in os.listdir(self.client.get_pdf_download_path())
-                if not f.startswith(self.DOWNLOAD_FILE_PREFIX) and
-                    not f.endswith('.crdownload')
-            ], key=os.path.getctime
-        ):
+        retries = 0
+        downloaded_files = self.get_downloaded_files()
+        while retries < 3:
+            if downloaded_files.count() > 0:
+                break
+            else:
+                downloaded_files = self.get_downloaded_files()
+            self.wait_for()
+            retries += 1
+
+        if downloaded_files.count() == 0 or \
+                not max(downloaded_files, key=os.path.getctime):
             return None
-        return max(
-            [
-                self.client.get_pdf_download_path() + '/' + f
-                for f in os.listdir(self.client.get_pdf_download_path())
-                if not f.startswith(self.DOWNLOAD_FILE_PREFIX) and
-                    not f.endswith('.crdownload')
-            ], key=os.path.getctime
-        )
+        return max(downloaded_files, key=os.path.getctime)
+
+    def get_downloaded_files(self) -> List:
+        return [
+            self.client.get_pdf_download_path() + '/' + f
+            for f in os.listdir(self.client.get_pdf_download_path())
+            if not f.startswith(self.DOWNLOAD_FILE_PREFIX) and
+            not f.endswith('.crdownload')
+        ]
 
     def run(self, zipcodes: List[str]) -> List[Entry]:
         for zipcode in zipcodes:

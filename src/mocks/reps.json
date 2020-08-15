@@ -98,5 +98,9 @@
     "GPLUS": {
         "name": "GRID Plus Energy",
         "website": "grid-enroll.smartgridcis.net/"
+    },
+    "FST": {
+        "name": "First Choice Power",
+        "website": "https://www.firstchoicepower.com/"
     }
 }

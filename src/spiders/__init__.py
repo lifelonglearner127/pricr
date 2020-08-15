@@ -55,5 +55,5 @@ REP_SPIDER_MAPPING = {
     "SPRK": SparkEnergySpider,
     "CPL": CplEnergySpider,
     "THINK": ThinkEnergySpider,
-    "GRID": GridPlusEnergySpider,
+    "GPLUS": GridPlusEnergySpider,
 }

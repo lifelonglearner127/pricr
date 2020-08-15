@@ -86,5 +86,61 @@
     "SPRK": {
         "name": "Spark Energy",
         "website": "www.sparkenergy.com/"
+    },
+    "CPL": {
+        "name": "CPLR Energy",
+        "website": "www.cplretailenergy.com/"
+    },
+    "THINK": {
+        "name": "Think Energy",
+        "website": "www.mythinkenergy.com/"
+    },
+    "GPLUS": {
+        "name": "GRID Plus Energy",
+        "website": "grid-enroll.smartgridcis.net/"
+    },
+    "WTU": {
+        "name": "WTU Energy",
+        "website": "www.wturetailenergy.com/"
+    },
+    "APGE": {
+        "name": "APGE",
+        "website": "www.apge.com/"
+    },
+    "FST": {
+        "name": "First Choice Power",
+        "website": "https://www.firstchoicepower.com/"
+    },
+    "POGO": {
+        "name": "Pogo Energy",
+        "website": "https://my.pogoenergy.com/"
+    },
+    "PLSE": {
+        "name": "Pulse Energy",
+        "website": "www.pulsepowertexas.com/"
+    },
+    "E2GO": {
+        "name": "Energty ToGo",
+        "website": "myenergytogo.com/"
+    },
+    "LSTR": {
+        "name": "Lonestar Energy",
+        "website": "lonestarenergytx.com/"
+    },
+    "NEWP": {
+        "name": "New Power Energy",
+        "website": "newpowertx.com/"
+    },
+    "PWRN": {
+        "name": "Power Next",
+        "website": "mypowernext.com/"
+    },
+    "V247": {
+        "name": "V247 Energy",
+        "website": "v247power.com/"
+    },
+    "TOWN": {
+        "name": "TOWN SQUARE ENERGY ",
+        "website": "https://townsquareenergy.com/"
     }
 }

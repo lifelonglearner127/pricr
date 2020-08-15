@@ -20,10 +20,23 @@ from .texpo_energy import TexpoEnergySpider
 from .yep_energy import YepSpider
 from .south_west_pnl import SouthwestPLSpider
 from .penstar_power import PstrPowerSpider
-from .chmp_energy import ChmpEnergySpider
 from .infinite_energy import InfiniteEnergySpider
 from .ambit_energy import AmbitEnergySpider
 from .spark_energy import SparkEnergySpider
+from .cpl_retail_energy import CplEnergySpider
+from .think_energy import ThinkEnergySpider
+from .grid_plus_energy import GridPlusEnergySpider
+from .wtu_energy import WTUEnergySpider
+from .apge_energy import APGESpider
+from .first_choice_power import FirstChoicePowerSpider
+from .pogo_energy import PogoEnergy
+from .pulse_energy import PulseEnergySpider
+from .energy_togo import EnergyToGoSpider
+from .lonestar_energy import LSTREnergySpider
+from .new_power_spider import NewPowerEnergySpider
+from .power_newx import PowerNextSpider
+from .v247_energy_spider import V247EnergySpider
+from .town_square_energy import TownSquareEnergySpider
 
 
 REP_SPIDER_MAPPING = {
@@ -42,7 +55,6 @@ REP_SPIDER_MAPPING = {
     "NOW": NowPowerSpider,
     "DSCT": DiscountPower,
     "CIRRO": CirroEnergySpider,
-    "CHMP": ChmpEnergySpider,
     "TEXPO": TexpoEnergySpider,
     "YEP": YepSpider,
     "SWPL": SouthwestPLSpider,
@@ -51,4 +63,19 @@ REP_SPIDER_MAPPING = {
     "INFE": InfiniteEnergySpider,
     "AMBT": AmbitEnergySpider,
     "SPRK": SparkEnergySpider,
+    "CPL": CplEnergySpider,
+    "THINK": ThinkEnergySpider,
+    "GPLUS": GridPlusEnergySpider,
+    "WTU": WTUEnergySpider,
+    "APGE": APGESpider,
+    "GRID": GridPlusEnergySpider,
+    "FST": FirstChoicePowerSpider,
+    "POGO": PogoEnergy,
+    "PLSE": PulseEnergySpider,
+    "E2GO": EnergyToGoSpider,
+    "LSTR": LSTREnergySpider,
+    "NEWP": NewPowerEnergySpider,
+    "PWRN": PowerNextSpider,
+    "V247": V247EnergySpider,
+    "TOWN": TownSquareEnergySpider
 }

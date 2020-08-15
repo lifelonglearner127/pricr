@@ -49,7 +49,7 @@ class InfiniteEnergySpider(SpiderBase):
         price = price_element.text.rstrip('¢')
 
         # product
-        product_name = card_body_elements = el.find_element_by_xpath(
+        product_name = el.find_element_by_xpath(
             './/div/div/h2'
         ).text
 
@@ -72,6 +72,7 @@ class InfiniteEnergySpider(SpiderBase):
 
         if link:
             link.click()
+            self.wait_for()
 
         return {
             'term': term,

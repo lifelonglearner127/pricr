@@ -110,5 +110,9 @@
     "POGO": {
         "name": "Pogo Energy",
         "website": "https://my.pogoenergy.com/"
+    },
+    "V247": {
+        "name": "V247 Energy",
+        "website": "v247power.com/"
     }
 }

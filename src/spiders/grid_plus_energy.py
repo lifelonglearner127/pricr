@@ -56,7 +56,8 @@ class GridPlusEnergySpider(SpiderBase):
             '//ul[@class="free-night-ul"]/li[1]/a[1]')
         self.client.execute_script("arguments[0].click();", efl_element)
         self.wait_for(2)
-        close_btn = modal.find_element_by_xpath('//div[@class="modal-footer"]/button')
+        close_btn = modal.find_element_by_xpath(
+            '//div[@class="modal-footer"]/button')
         self.client.execute_script("arguments[0].click();", close_btn)
 
         return {

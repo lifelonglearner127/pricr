@@ -25,6 +25,7 @@ from .infinite_energy import InfiniteEnergySpider
 from .ambit_energy import AmbitEnergySpider
 from .spark_energy import SparkEnergySpider
 from .cpl_retail_energy import CplEnergySpider
+from .think_energy import ThinkEnergySpider
 
 
 REP_SPIDER_MAPPING = {
@@ -43,7 +44,6 @@ REP_SPIDER_MAPPING = {
     "NOW": NowPowerSpider,
     "DSCT": DiscountPower,
     "CIRRO": CirroEnergySpider,
-    "CHMP": ChmpEnergySpider,
     "TEXPO": TexpoEnergySpider,
     "YEP": YepSpider,
     "SWPL": SouthwestPLSpider,
@@ -53,4 +53,5 @@ REP_SPIDER_MAPPING = {
     "AMBT": AmbitEnergySpider,
     "SPRK": SparkEnergySpider,
     "CPL": CplEnergySpider,
+    "THINK": ThinkEnergySpider,
 }

@@ -27,6 +27,7 @@ from .spark_energy import SparkEnergySpider
 from .pulse_energy import PulseEnergySpider
 from .energy_togo import EnergyToGoSpider
 from .lonestar_energy import LSTREnergySpider
+from .new_power_spider import NewPowerEnergySpider
 
 
 REP_SPIDER_MAPPING = {
@@ -56,4 +57,5 @@ REP_SPIDER_MAPPING = {
     "PLSE": PulseEnergySpider,
     "E2GO": EnergyToGoSpider,
     "LSTR": LSTREnergySpider,
+    "NEWP": NewPowerEnergySpider,
 }

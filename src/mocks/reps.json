@@ -142,5 +142,9 @@
     "TOWN": {
         "name": "TOWN SQUARE ENERGY ",
         "website": "https://townsquareenergy.com/"
+    },
+    "ENTR": {
+        "name": "ENTRUST ENERGY",
+        "website": "http://www.entrustenergy.com"
     }
 }

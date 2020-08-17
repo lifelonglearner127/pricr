@@ -154,5 +154,9 @@
     "GME": {
         "name": "Green Mountain Energy ",
         "website": "www.greenmountainenergy.com/"
+    },
+    "LIB": {
+        "name": "Liberty Power",
+        "website": "https://www.libertypowercorp.com/"
     }
 }

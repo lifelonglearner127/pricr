@@ -37,6 +37,15 @@ from .new_power_spider import NewPowerEnergySpider
 from .power_newx import PowerNextSpider
 from .v247_energy_spider import V247EnergySpider
 from .town_square_energy import TownSquareEnergySpider
+from .summer_energy import SummerEnergySpider
+from .entrust_energy import EntrustEnergySpider
+from .green_mountain_energy import GreenMountEnergySpider
+from .viridian_energy import ViridianEnergySpider
+from .tomorrow_energy import TomorrowEnergySpider
+from .amigo_energy import AmigoEnergySpider
+from .tara_energy import TaraEnergySpider
+from .liberty_power import LibertyPowerSpider
+from .iberdrola import IberdrolaTexasSpider
 from .stream_energy import StreamEnergySpider
 
 

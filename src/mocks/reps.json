@@ -143,8 +143,16 @@
         "name": "TOWN SQUARE ENERGY ",
         "website": "https://townsquareenergy.com/"
     },
+    "SUMM": {
+        "name": "SUMMER ENERGY",
+        "website": "https://www.summerenergy.com/"
+    },
     "ENTR": {
         "name": "ENTRUST ENERGY",
         "website": "http://www.entrustenergy.com"
+    },
+    "GME": {
+        "name": "Green Mountain Energy ",
+        "website": "www.greenmountainenergy.com/"
     }
 }

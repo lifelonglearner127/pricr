@@ -154,5 +154,9 @@
     "GME": {
         "name": "Green Mountain Energy ",
         "website": "www.greenmountainenergy.com/"
+    },
+    "TOM": {
+        "name": "TOMORROW ENERGY",
+        "website": "https://tomorrowenergy.com/"
     }
 }

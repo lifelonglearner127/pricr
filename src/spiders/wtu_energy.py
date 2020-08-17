@@ -1,7 +1,5 @@
-import re
 from typing import Tuple, Generator
 from selenium.webdriver.remote.webelement import WebElement
-from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from .cpl_retail_energy import CplEnergySpider
 
@@ -19,4 +17,3 @@ class WTUEnergySpider(CplEnergySpider):
             retries += 1
             elements = container.find_elements_by_class_name('plan-box')
         yield tuple(elements[4:])
-    

@@ -1,6 +1,5 @@
 import re
 from typing import Tuple, Generator
-from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.common.keys import Keys
 from ..libs.engines import SpiderBase
@@ -45,14 +44,14 @@ class TriEagleEnergySpider(SpiderBase):
         term_element = el.find_element_by_css_selector(
             'div.term')
         term = re.search(r'\b\d+\b', term_element.text).group()
-        
+
         price_element = el.find_element_by_css_selector(
             'div.productPrice ')
         price = re.search(r'(\d+(\.\d+)?)', price_element.text).group()
         try:
             plan_element = el.find_element_by_css_selector(
                 'div.productName ')
-        except:
+        except Exception:
             plan_element = el.find_element_by_css_selector(
                 'div.greenProductName ')
         product_name = plan_element.text

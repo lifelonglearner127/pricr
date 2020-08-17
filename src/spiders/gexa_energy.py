@@ -58,7 +58,7 @@ class GexaEnergySpider(SpiderBase):
             by=By.CSS_SELECTOR
         )
         self.wait_until_document_ready()
-            
+
         price_element = el.find_element_by_css_selector(
             'div.plan_price_element span.plan_price_value')
         price = price_element.text
@@ -70,7 +70,8 @@ class GexaEnergySpider(SpiderBase):
         # self.wait_until_document_ready()
 
         modal = self.wait_until('ProductDetailInfo')
-        product_name = self.wait_until('div#ProductDetailInfo h3', by=By.CSS_SELECTOR).text
+        product_name = self.wait_until(
+            'div#ProductDetailInfo h3', by=By.CSS_SELECTOR).text
 
         term_element = modal.find_elements_by_css_selector('ul li.mb-2')[0]
         raw_text = term_element.text

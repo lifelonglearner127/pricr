@@ -1,12 +1,9 @@
-import os
 import re
-from typing import Tuple, Generator, List
-from shutil import move
+from typing import Tuple, Generator
 from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from ..libs.engines import SpiderBase
-from src.libs.models import Entry
 
 
 class V247EnergySpider(SpiderBase):

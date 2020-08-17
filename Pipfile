@@ -4,10 +4,13 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [dev-packages]
+flake8 = "==3.8.3"
 
 [packages]
 pyvirtualdisplay = "*"
 selenium = "*"
+requests = "==2.24.0"
+pre-commit = "==2.6.0"
 
 [requires]
 python_version = "3.6"

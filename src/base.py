@@ -2,11 +2,12 @@ import os
 import csv
 import time
 from warnings import warn
-from typing import List, Tuple, Dict
+from typing import List, Dict
 from src.config import Config
 from src.libs.browsers import Browser
 from src.libs.models import Entry
-from src.spiders import REP_SPIDER_MAPPING, SpiderInterface
+from src.libs.engines import SpiderInterface
+from src.spiders import REP_SPIDER_MAPPING
 
 
 class Crawler(object):
@@ -44,14 +45,21 @@ class Crawler(object):
         self.wait_downloading()
 
     def write_to_csv(self, entries: List[Entry]):
-        report_filename = os.path.join(self.client.report_path, 'data.csv')
+        report_filename = os.path.join(self.client.report_path, "data.csv")
         headers = [
-            "REP_ID", "ZipCode", "Commodity", "Product Name", "Price", "Term", "Filename"]
+            "REP_ID",
+            "ZipCode",
+            "Commodity",
+            "Product Name",
+            "Price",
+            "Term",
+            "Filename",
+        ]
         if not os.path.isfile(report_filename):
-            with open(report_filename, 'w+') as csvfile:
+            with open(report_filename, "w+") as csvfile:
                 writer = csv.writer(csvfile)
                 writer.writerow(headers)
-        with open(report_filename, 'a') as csvfile:
+        with open(report_filename, "a") as csvfile:
             writer = csv.writer(csvfile)
             for entry in entries:
                 writer.writerow(entry.to_row())

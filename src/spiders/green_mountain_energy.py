@@ -31,14 +31,14 @@ class GreenMountEnergySpider(SpiderBase):
             retries += 1
             elements = container.find_elements_by_class_name('row-product')
         yield tuple(elements)
-    
+
     def __is_element_exist(self, el: str):
         try:
             # self.client.find_element_by_id(el)
             decline_btn = self.client.find_element_by_id('mcx_decline')
             decline_btn.click()
             return True
-        except:
+        except Exception:
             return False
 
     def __download_pdf(self, url: str):
@@ -48,16 +48,16 @@ class GreenMountEnergySpider(SpiderBase):
         self.client.get(url)
         if self.__is_element_exist('mcx_invite_div'):
             decline_btn = self.client.find_element_by_id('mcx_decline')
-            decline_btn.click()            
+            decline_btn.click()
         efl_element = self.client.find_element_by_xpath(
-            '//div[@class="details-contract-documents'+\
-                ' details-contract-documents-bottom"]/a[1]')
+            '//div[@class="details-contract-documents' +
+            ' details-contract-documents-bottom"]/a[1]')
         self.client.execute_script("arguments[0].click();", efl_element)
         self.client.close()
         self.client.switch_to.window(main_client)
         self.wait_for()
         return self.client
-        
+
     def analyze_element(self, el: WebElement):
         self.__is_element_exist('mcx_invite_div')
         plan_element = el.find_element_by_xpath(

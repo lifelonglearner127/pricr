@@ -49,34 +49,3 @@ class Entry:
             self.term,
             self.filename,
         )
-
-
-class TomorrowEnergyEntry(Entry):
-
-    is_efl_link_exist: bool = False
-
-    def __init__(
-        self,
-        rep_id: str,
-        zipcode: str,
-        term: int,
-        price: float,
-        product_name: str,
-        commodity: str = COMMODITY.electricity,
-        filename: str = '',
-        is_efl_link_exist: bool = False
-    ):
-        self.rep_id = rep_id.upper()
-        self.zipcode = zipcode
-        self.term = int(term)
-        self.price = float(price)
-        self.product_name = product_name
-        self.filename = filename
-        self.is_efl_link_exist = is_efl_link_exist
-        if commodity not in [
-            COMMODITY.electricity,
-            COMMODITY.natural_gas
-        ]:
-            self.commodity = COMMODITY.electricity
-        else:
-            self.commodity = commodity

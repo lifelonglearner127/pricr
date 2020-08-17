@@ -6,114 +6,132 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from ..libs.engines import SpiderBase
-from ..libs.models import TomorrowEnergyEntry
+from ..libs.models import Entry, COMMODITY
+from ..libs.browsers import Browser
+import calendar
+import time
+import requests
 
 
 class ViridianEnergySpider(SpiderBase):
     name = 'Viridian Energy'
     REP_ID = 'VIR'
     base_url = 'https://enroll.viridian.com/enroll'
+    cities: List[str] = []
+    city_url = '/GetLocationsByPostalCode'
 
-    def convert_to_entry(
-            self, zipcode: str, data: dict) -> TomorrowEnergyEntry:
-        return TomorrowEnergyEntry(
-            rep_id=self.REP_ID,
-            zipcode=zipcode,
-            **data
-        )
+    def __init__(self, client: Browser):
+        super().__init__(client)
+        self.cities.clear()
 
-    def extract(self, zipcode: str) -> List[TomorrowEnergyEntry]:
+    def get_available_cities(self, zipcode: str) -> List[str]:
+        ts = calendar.timegm(time.gmtime())
+        params = {
+            'postalCode': zipcode,
+            '_': ts
+        }
+        r = requests.get(
+            url=self.base_url + self.city_url,
+            params=params)
+        self.cities = [city['City'] for city in r.json()]
+
+    def extract(self, zipcode: str) -> List[Entry]:
         self.log("Searching with zip code - %s" % zipcode)
-        self.submit_zipcode(zipcode)
-        self.hook_after_zipcode_submit()
-        for elements in self.get_elements():
-            for element in elements:
-                entry = self.convert_to_entry(
-                    zipcode,
-                    self.analyze_element(element)
-                )
-                if entry.is_efl_link_exist:
-                    self.log("Downloading for <%s>..." % entry.product_name)
+        self.get_available_cities(zipcode)
+        for city in self.cities:
+            self.submit_zipcode(zipcode, city)
+            self.hook_after_zipcode_submit()
+            for elements in self.get_elements():
+                for element in elements:
+                    entry = self.convert_to_entry(
+                        zipcode,
+                        self.analyze_element(element)
+                    )
+                    self.log(
+                        "Downloading for <%s>..." % entry.product_name)
                     if self.wait_until_download_finish():
                         entry.filename = self.rename_downloaded(
                             zipcode, entry.product_name
                         )
-                self.data.append(entry)
+                    self.data.append(entry)
+            self.client.get(self.base_url)
 
-    def submit_zipcode(self, zipcode: str):
-        zipcode_element = self.wait_until(
-            'form#top-homepage-zip-widget input.input-field.zip',
-            By.CSS_SELECTOR
-        )
+    def submit_zipcode(self, zipcode: str, city: str):
+        zipcode_element = self.wait_until('PostalCode')
         zipcode_element.clear()
         zipcode_element.send_keys(zipcode)
-        zipcode_element.send_keys(Keys.ENTER)
 
-    def hook_after_zipcode_submit(self):
-        self.wait_until_invisible('large-loader')
+        city_selector = self.wait_until_visible('City')
+        city_selector.click()
+        city_selector.find_element_by_xpath(
+            '//option[contains(text(),"{}")]'.format(city)
+        ).click()
+        self.wait_until('PropertyTypeResidential').click()
+        self.wait_until('PropertyOwnershipOwn').click()
+        self.wait_until('ContinueButton').click()
 
     def get_elements(self) -> Generator[Tuple[WebElement], None, None]:
-        self.wait_until_invisible('large-loader')
-        container = self.wait_until('energy-rates-container', By.CLASS_NAME)
+        container = self.wait_until('PlansContainer')
         elements = container.find_elements_by_css_selector(
-            'div.rate-plans-container div.rate-card')
+            'div.commodity-container div.ribbon-container')
         retries = 0
         while retries < 5 and not elements:
             retries += 1
             elements = container.find_elements_by_css_selector(
-                'div.rate-plans-container div.rate-card')
+                'div.commodity-container div.ribbon-container')
         yield tuple(elements)
 
     def analyze_element(self, el: WebElement):
-        try:
-            term_element = el.find_element_by_css_selector(
-                'div.rate-wrapper > div.tabs-wrapper ' +
-                'div.tab-block.active div.term-block div.term')
-        except Exception:
-            term_element = el.find_element_by_css_selector(
-                'div.rate-wrapper > div.tabs-wrapper ' +
-                'div.tab-block div.term-block div.term')
+        term_element = el.find_element_by_css_selector(
+            'div.ribbon-rate-section div.ribbon-rate-wrapper ' +
+            'div.row:nth-child(2) div.ribbon-label-data')
 
         term = term_element.text
-        match = re.search(r'(\d+)\s+MONTH', term)
+        match = re.search(r'(\d+)\s+Months', term)
         if match:
             term = match.groups()[0]
         else:
-            raise Exception("Term could not match. (%s)" % term)
+            if term == 'Monthly':
+                term = '1'
+            else:
+                raise Exception("Term could not match. (%s)" % term)
 
-        try:
-            price_element = el.find_element_by_css_selector(
-                'div.rate-wrapper > div.tabs-wrapper ' +
-                'div.tab-block.active div.price-block span.amount')
-        except Exception:
-            price_element = el.find_element_by_css_selector(
-                'div.rate-wrapper > div.tabs-wrapper ' +
-                'div.tab-block div.price-block span.amount')
+        price_element = el.find_element_by_css_selector(
+            'div.ribbon-rate-section div.ribbon-rate-wrapper ' +
+            'div.ribbon-rate')
 
-        price = price_element.text
+        price = price_element.text.split('¢')[0]
 
         plan_element = el.find_element_by_css_selector(
-            'div.card-header div.name')
+            'div.ribbon-heading-section div.ribbon-heading ' +
+            'span')
         product_name = plan_element.text
 
-        is_efl_link_exist = False
-        efl_link_element = el.find_element_by_css_selector(
-            'div.rate-wrapper > div.tabs-wrapper ' +
-            'div.full-plan-details div.plan-documents ' +
-            'ul.links li.rate-plan-summary')
-        if efl_link_element.get_attribute('data-file-type') == "efacts":
-            is_efl_link_exist = True
-            self.client.get(
-                efl_link_element.get_attribute('data-summary-url'))
+        el_class = el.get_attribute('class')
+        el_class_name = re.search(
+            r'(ribbon-gas-text|ribbon-electric-text)', el_class).group()
+        if el_class_name == 'ribbon-gas-text':
+            commodity = COMMODITY.natural_gas
+        elif el_class_name == 'ribbon-electric-text':
+            commodity = COMMODITY.electricity
+        else:
+            commodity = COMMODITY.electricity
+
+        # efl_link_element = el.find_element_by_css_selector(
+        #     'div.rate-wrapper > div.tabs-wrapper ' +
+        #     'div.full-plan-details div.plan-documents ' +
+        #     'ul.links li.rate-plan-summary')
+        # self.client.get(
+        #     efl_link_element.get_attribute('data-summary-url'))
 
         return {
             'term': term,
             'price': price,
             'product_name': product_name,
-            'is_efl_link_exist': is_efl_link_exist
+            'commodity': commodity
         }
 
-    def wait_until_invisible(
+    def wait_until_visible(
         self,
         identifier: str,
         by: str = By.ID,
@@ -121,4 +139,4 @@ class ViridianEnergySpider(SpiderBase):
     ) -> Optional[WebElement]:
         return WebDriverWait(
             self.client, timeout).until(
-                EC.invisibility_of_element_located((by, identifier)))
+                EC.visibl((by, identifier)))

@@ -8,7 +8,7 @@ from ..libs.engines import SpiderBase
 
 class IberdrolaTexasSpider(SpiderBase):
     name = 'Iberdrola'
-    REP_ID = 'Iberdrola'
+    REP_ID = 'IBER'
     base_url = 'https://iberdrolatexas.com/'
 
     def submit_zipcode(self, zipcode: str):
@@ -54,16 +54,17 @@ class IberdrolaTexasSpider(SpiderBase):
         link = dialog_element.find_element_by_xpath('.//a')
         link.click()
 
+        self.wait_for(5)
         self.client.switch_to_window(self.client.window_handles[-1])
         download_button_element = self.wait_until(
             "downloadbutton", by=By.CLASS_NAME, timeout=30
         )
         self.client.execute_script(
             "arguments[0].click();", download_button_element)
-        self.wait_for(5)
+        self.wait_for(10)
         self.client.close()
         self.client.switch_to.window(main_client)
-        self.wait_for(5)
+        self.wait_for(10)
 
         close_button = dialog_element.find_element_by_xpath('.//button')
         close_button.click()

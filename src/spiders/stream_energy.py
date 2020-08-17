@@ -3,7 +3,6 @@ import re
 from shutil import move
 from typing import List, Tuple, Generator
 from selenium.webdriver.remote.webelement import WebElement
-from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from src.libs.models import Entry
 from ..libs.engines import SpiderBase
@@ -21,7 +20,7 @@ class StreamEnergySpider(SpiderBase):
             self.log("Starting with %s..." % zipcode)
             try:
                 self.extract(zipcode)
-            except:
+            except Exception:
                 continue
         self.log("Finished!")
         return self.data
@@ -60,7 +59,7 @@ class StreamEnergySpider(SpiderBase):
             '//button[@class="view-rates"]'
         )
         view_rates_btn.click()
-    
+
     def extract(self, zipcode: str) -> List[Entry]:
         self.log("Searching with zip code - %s" % zipcode)
         self.submit_zipcode(zipcode)
@@ -77,7 +76,7 @@ class StreamEnergySpider(SpiderBase):
                         zipcode, entry.product_name, entry.price
                     )
                 self.data.append(entry)
-    
+
     def rename_downloaded(
         self,
         zipcode: str,
@@ -99,7 +98,7 @@ class StreamEnergySpider(SpiderBase):
         try:
             self.client.find_element_by_xpath(el)
             return True
-        except:
+        except Exception:
             return False
 
     def get_elements(self) -> Generator[Tuple[WebElement], None, None]:
@@ -115,7 +114,7 @@ class StreamEnergySpider(SpiderBase):
             elements = container.find_elements_by_xpath(
                 '//div[@class="hide-large mobile ng-scope"]')
         yield tuple(elements)
-        
+
     def analyze_element(self, el: WebElement):
         # Popping up learn more details
         detail_link = el.find_element_by_xpath('.//tfoot//td//a')
@@ -126,25 +125,25 @@ class StreamEnergySpider(SpiderBase):
             by=By.XPATH
         )
         plan_element = self.client.find_element_by_xpath(
-            "//div[@class='plan-details-modal']" +\
-                "//div[@class='modal-header']/h2")
+            "//div[@class='plan-details-modal']" +
+            "//div[@class='modal-header']/h2")
         product_name = plan_element.text
-        term_element= self.client.find_element_by_xpath(
-            "//div[@class='plan-details-modal']//div[@class='modal-body']" +\
-                "//div[@class='card'][2]//p[1]")
+        term_element = self.client.find_element_by_xpath(
+            "//div[@class='plan-details-modal']//div[@class='modal-body']" +
+            "//div[@class='card'][2]//p[1]")
         match = re.search(r'\b\d+\b', term_element.text)
         if match:
             term = match.group()
         else:
             term = 1
         price_element = self.client.find_element_by_xpath(
-            "//div[@class='plan-details-modal']//div[@class='modal-body']" +\
-                "//div[@class='card'][1]//p[1]")
+            "//div[@class='plan-details-modal']//div[@class='modal-body']" +
+            "//div[@class='card'][1]//p[1]")
         price = re.search(r'(\d+(\.\d+)?)', price_element.text).group()
 
         efl_element = self.client.find_element_by_xpath(
-            "//div[@class='plan-details-modal']//div[@class='modal-footer']" +\
-                "//ul//li[1]/a")
+            "//div[@class='plan-details-modal']//div[@class='modal-footer']" +
+            "//ul//li[1]/a")
         self.client.execute_script("arguments[0].click();", efl_element)
         self.wait_for(3)
         close_btn = modal.find_element_by_xpath(

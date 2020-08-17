@@ -1,4 +1,6 @@
+import os
 import re
+from shutil import move
 from typing import List, Tuple, Generator
 from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.common.keys import Keys
@@ -58,6 +60,40 @@ class StreamEnergySpider(SpiderBase):
             '//button[@class="view-rates"]'
         )
         view_rates_btn.click()
+    
+    def extract(self, zipcode: str) -> List[Entry]:
+        self.log("Searching with zip code - %s" % zipcode)
+        self.submit_zipcode(zipcode)
+        self.hook_after_zipcode_submit()
+        for elements in self.get_elements():
+            for element in elements:
+                entry = self.convert_to_entry(
+                    zipcode,
+                    self.analyze_element(element)
+                )
+                self.log("Downloading for <%s>..." % entry.product_name)
+                if self.wait_until_download_finish():
+                    entry.filename = self.rename_downloaded(
+                        zipcode, entry.product_name, entry.price
+                    )
+                self.data.append(entry)
+    
+    def rename_downloaded(
+        self,
+        zipcode: str,
+        product_name: str,
+        price: str
+    ) -> str:
+        filename = self._get_last_downloaded_file()
+        product_name = re.sub(r'[^a-zA-Z0-9]+', '', product_name)
+        new_filename =\
+            f'TODD-{self.REP_ID}-{zipcode}-{product_name}-{price}.pdf'
+        move(
+            filename,
+            os.path.join(self.client.get_pdf_download_path(), new_filename)
+        )
+        self.wait_for()
+        return new_filename
 
     def __is_element_exist(self, el: str):
         try:
@@ -79,7 +115,7 @@ class StreamEnergySpider(SpiderBase):
             elements = container.find_elements_by_xpath(
                 '//div[@class="hide-large mobile ng-scope"]')
         yield tuple(elements)
-    
+        
     def analyze_element(self, el: WebElement):
         # Popping up learn more details
         detail_link = el.find_element_by_xpath('.//tfoot//td//a')
@@ -110,7 +146,7 @@ class StreamEnergySpider(SpiderBase):
             "//div[@class='plan-details-modal']//div[@class='modal-footer']" +\
                 "//ul//li[1]/a")
         self.client.execute_script("arguments[0].click();", efl_element)
-        self.wait_for()
+        self.wait_for(3)
         close_btn = modal.find_element_by_xpath(
             '//div[@class="modal-body"]/div[4]/button')
         self.client.execute_script("arguments[0].click();", close_btn)

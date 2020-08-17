@@ -86,5 +86,14 @@ REP_SPIDER_MAPPING = {
     "PWRN": PowerNextSpider,
     "V247": V247EnergySpider,
     "TOWN": TownSquareEnergySpider,
+    "SUMM": SummerEnergySpider,
+    "ENTR": EntrustEnergySpider,
+    "GME": GreenMountEnergySpider,
+    "VIR": ViridianEnergySpider,
+    "TOM": TomorrowEnergySpider,
+    "AMIG": AmigoEnergySpider,
+    "TARA": TaraEnergySpider,
+    "LIB": LibertyPowerSpider,
+    "IBER": IberdrolaTexasSpider,
     "STRM": StreamEnergySpider
 }

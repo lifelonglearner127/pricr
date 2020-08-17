@@ -1,6 +1,4 @@
-import re
 from typing import Tuple, Generator
-from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.common.keys import Keys
 from ..libs.engines import SpiderBase
@@ -24,9 +22,6 @@ class ReliantEnergySpider(SpiderBase):
         self.wait_for()
 
     def get_elements(self) -> Generator[Tuple[WebElement], None, None]:
-        waiter = self.wait_until(
-            '#transTbody .sort-list .sort-item',
-            by=By.CSS_SELECTOR)
         elements = self.client.find_elements_by_css_selector(
             '#transTbody .sort-list .sort-item')
         retries = 0
@@ -35,7 +30,7 @@ class ReliantEnergySpider(SpiderBase):
             elements = self.client.find_elements_by_css_selector(
                 '#transTbody .sort-list .sort-item')
         yield tuple(elements)
-    
+
     def analyze_element(self, el: WebElement):
         more_detail_button = el.find_element_by_css_selector(
             'a.pcPricingDetails.pcShowPrice.analyticsProductViewDetails')
@@ -46,7 +41,7 @@ class ReliantEnergySpider(SpiderBase):
 
         term = el.find_element_by_css_selector(
             'div.pcTopLeftDiv div.termvalue').get_attribute('data-value')
-        
+
         price = el.find_element_by_css_selector(
             'div.pcTopRightDiv span.avgprice_new span').text
 

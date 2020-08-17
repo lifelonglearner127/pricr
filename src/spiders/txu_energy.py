@@ -1,7 +1,6 @@
 import re
 from typing import Tuple, Generator, List
 from selenium.webdriver.remote.webelement import WebElement
-from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from selenium.common.exceptions import NoSuchElementException
 from ..libs.models.entries import Entry
@@ -20,26 +19,33 @@ class TxuEnergy(SpiderBase):
         # Open Plans Modal
         self.zipcode = zipcode
         plans_for_home = self.client.find_element_by_xpath(
-            '//section//div[@class="row"]//div[@id="maincontent_1_rptRibbon_rbnBtn_0"]/a'
+            '//section//div[@class="row"]' +
+            '//div[@id="maincontent_1_rptRibbon_rbnBtn_0"]/a'
         )
         plans_for_home.click()
 
-        customer_check_modal = self.wait_until('//div[@id="TrimForAJAX"]//div[@id="main_0_OuterBox"]', By.XPATH)
+        customer_check_modal = self.wait_until(
+            '//div[@id="TrimForAJAX"]//div[@id="main_0_OuterBox"]', By.XPATH)
         new_customer_btn = customer_check_modal.find_element_by_id('newCustJS')
         new_customer_btn.click()
 
         zipcode_modal = self.wait_until('main_0_pnlProspectCustomer')
-        move_to_address = zipcode_modal.find_element_by_css_selector('#main_0_prospectTypeSwitch ~ span')
+        move_to_address = zipcode_modal.find_element_by_css_selector(
+            '#main_0_prospectTypeSwitch ~ span')
         move_to_address.click()
 
-        radio_apartment = zipcode_modal.find_element_by_css_selector('#main_0_rdioApartmentNo ~ span')
+        radio_apartment = zipcode_modal.find_element_by_css_selector(
+            '#main_0_rdioApartmentNo ~ span')
         radio_apartment.click()
 
-        zipcode_element =zipcode_modal.find_element_by_id('main_0_txtTypeAhead')
+        zipcode_element = zipcode_modal.find_element_by_id(
+            'main_0_txtTypeAhead')
         zipcode_element.clear()
         zipcode_element.send_keys(zipcode)
 
-        self.wait_until('//input[@id="main_0_txtTypeAhead"][contains(@class, "match")]', By.XPATH)
+        self.wait_until(
+            '//input[@id="main_0_txtTypeAhead"][contains(@class, "match")]',
+            By.XPATH)
         # zipcode_element.send_keys(Keys.ENTER)
 
         submit_button = zipcode_modal.find_element_by_id('main_0_btnProspect')
@@ -83,15 +89,17 @@ class TxuEnergy(SpiderBase):
         yield tuple(elements)
 
     def analyze_element(self, el: WebElement):
-        
         # check if see_more_options is exist
         self.current_plan = el
         try:
             plan_entries = []
-            show_more_options = el.find_element_by_css_selector('div.btn-detail-plans a#showmoreModal')
+            show_more_options = el.find_element_by_css_selector(
+                'div.btn-detail-plans a#showmoreModal')
             show_more_options.click()
-            show_more_modal = self.wait_until('//div[@id="maincontent_0_pnlOfferListing"][@class="miniOfferListing"]', By.XPATH)
-            
+            show_more_modal = self.wait_until(
+                '//div[@id="maincontent_0_pnlOfferListing"]' +
+                '[@class="miniOfferListing"]', By.XPATH)
+
             more_plans = show_more_modal.find_elements_by_css_selector(
                 'div.row')
             retries = 0
@@ -108,15 +116,16 @@ class TxuEnergy(SpiderBase):
                     )
                 plan_entries.append(entry)
                 time.sleep(2.5)
-            show_more_modal.find_element_by_css_selector('a.modal-close').click()
+            show_more_modal.find_element_by_css_selector(
+                'a.modal-close').click()
             return plan_entries
-        except NoSuchElementException as e:
+        except NoSuchElementException:
             # Check if abandPopup is visible
             if not self.check_aband_popup_visible():
                 return self.parse_element(el)
             else:
                 return self.analyze_element(self.current_plan)
-        except Exception as e:
+        except Exception:
             if not self.check_aband_popup_visible():
                 return self.parse_element(el)
             else:
@@ -126,7 +135,7 @@ class TxuEnergy(SpiderBase):
         try:
             term_element = el.find_element_by_css_selector(
                 'div.term h3 span')
-        except:
+        except Exception:
             term_element = el.find_element_by_css_selector(
                 'div.term h2 span')
         term = term_element.text
@@ -144,31 +153,35 @@ class TxuEnergy(SpiderBase):
 
         try:
             price_element = el.find_element_by_css_selector(
-            'div.rate h3 span')
-        except:
+                'div.rate h3 span')
+        except Exception:
             price_element = el.find_element_by_css_selector(
-            'div.rate h2 strong')
-        
+                'div.rate h2 strong')
+
         price = price_element.text.split('¢')[0]
 
         try:
             plan_element = el.find_element_by_css_selector(
-            'h4.plan-title ~ h2')
-        except:
+                'h4.plan-title ~ h2')
+        except Exception:
             plan_element = el.find_element_by_css_selector(
-            'div.plan-details-area h2 span')
-            
+                'div.plan-details-area h2 span')
+
         product_name = plan_element.text
 
         # time.sleep(3)
         try:
-            collapse_details = el.find_element_by_css_selector('div.plan-details-description a.details')
-        except:
-            collapse_details = el.find_element_by_css_selector('div.col-sm-12 a.details.confirm-ignore')
+            collapse_details = el.find_element_by_css_selector(
+                'div.plan-details-description a.details')
+        except Exception:
+            collapse_details = el.find_element_by_css_selector(
+                'div.col-sm-12 a.details.confirm-ignore')
         collapse_details.click()
-        collapse_id = collapse_details.get_attribute('data-target').split('#')[1]
+        collapse_id = collapse_details.get_attribute(
+            'data-target').split('#')[1]
         efl_download_link_element = el.find_element_by_xpath(
-            '//div[@id="{}"]//a[text()="Electricity Facts Label"]'.format(collapse_id))
+            '//div[@id="{}"]//a[text()="Electricity Facts Label"]'.format(
+                collapse_id))
 
         pdf_url = efl_download_link_element.get_attribute("href")
         self.client.get(pdf_url)
@@ -187,4 +200,3 @@ class TxuEnergy(SpiderBase):
             return True
         else:
             return False
-        

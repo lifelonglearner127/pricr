@@ -4,8 +4,7 @@ import logging
 from time import sleep
 from shutil import move
 from datetime import datetime
-from typing import List, Tuple, Any, Optional, Generator
-from selenium.common.exceptions import TimeoutException
+from typing import List, Tuple, Optional, Generator
 from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
@@ -55,9 +54,8 @@ class SpiderBase(SpiderInterface):
 
     def log(self, msg: str, level=logging.INFO):
         msg = "{when}:{who} => {what}".format(
-            when=datetime.now(),
-            who=self.name,
-            what=msg)
+            when=datetime.now(), who=self.name, what=msg
+        )
         logging.log(level, msg)
         print(msg)
 
@@ -66,11 +64,7 @@ class SpiderBase(SpiderInterface):
         return self._client
 
     def convert_to_entry(self, zipcode: str, data: dict) -> Entry:
-        return Entry(
-            rep_id=self.REP_ID,
-            zipcode=zipcode,
-            **data
-        )
+        return Entry(rep_id=self.REP_ID, zipcode=zipcode, **data)
 
     def wait_for(self, second: int = 1):
         sleep(second)
@@ -86,24 +80,19 @@ class SpiderBase(SpiderInterface):
         for elements in self.get_elements():
             for element in elements:
                 entry = self.convert_to_entry(
-                    zipcode,
-                    self.analyze_element(element)
-                )
+                    zipcode, self.analyze_element(element))
                 self.log("Downloading for <%s>..." % entry.product_name)
                 if self.wait_until_download_finish():
                     entry.filename = self.rename_downloaded(
-                        zipcode, entry.product_name
-                    )
+                        zipcode, entry.product_name)
                 self.data.append(entry)
 
     def rename_downloaded(self, zipcode: str, product_name: str) -> str:
         filename = self._get_last_downloaded_file()
-        product_name = re.sub(r'[^a-zA-Z0-9]+', '', product_name)
-        new_filename = f'TODD-{self.REP_ID}-{zipcode}-{product_name}.pdf'
-        move(
-            filename,
-            os.path.join(self.client.get_pdf_download_path(), new_filename)
-        )
+        product_name = re.sub(r"[^a-zA-Z0-9]+", "", product_name)
+        new_filename = f"TODD-{self.REP_ID}-{zipcode}-{product_name}.pdf"
+        move(filename, os.path.join(
+            self.client.get_pdf_download_path(), new_filename))
         self.wait_for()
         return new_filename
 
@@ -118,17 +107,18 @@ class SpiderBase(SpiderInterface):
             self.wait_for()
             retries += 1
 
-        if len(downloaded_files) == 0 or \
-                not max(downloaded_files, key=os.path.getctime):
+        if len(downloaded_files) == 0 or not max(
+            downloaded_files, key=os.path.getctime
+        ):
             return None
         return max(downloaded_files, key=os.path.getctime)
 
     def get_downloaded_files(self) -> List:
         return [
-            self.client.get_pdf_download_path() + '/' + f
+            self.client.get_pdf_download_path() + "/" + f
             for f in os.listdir(self.client.get_pdf_download_path())
-            if not f.startswith(self.DOWNLOAD_FILE_PREFIX) and
-            not f.endswith('.crdownload')
+            if not f.startswith(self.DOWNLOAD_FILE_PREFIX)
+            and not f.endswith(".crdownload")
         ]
 
     def run(self, zipcodes: List[str]) -> List[Entry]:
@@ -141,30 +131,25 @@ class SpiderBase(SpiderInterface):
         return self.data
 
     def wait_until(
-        self,
-        identifier: str,
-        by: str = By.ID,
-        timeout: int = 15
+        self, identifier: str, by: str = By.ID, timeout: int = 15
     ) -> Optional[WebElement]:
-        return WebDriverWait(
-            self.client, timeout).until(
-                EC.element_to_be_clickable((by, identifier)))
+        return WebDriverWait(self.client, timeout).until(
+            EC.element_to_be_clickable((by, identifier))
+        )
 
-    def wait_until_iframe(
-        self,
-        timeout: int = 15
-    ) -> Optional[WebElement]:
-        element = WebDriverWait(
-            self.client, timeout).until(
-                EC.frame_to_be_available_and_switch_to_it(
-                    self.client.find_element_by_xpath('//iframe')))
+    def wait_until_iframe(self, timeout: int = 15) -> Optional[WebElement]:
+        element = WebDriverWait(self.client, timeout).until(
+            EC.frame_to_be_available_and_switch_to_it(
+                self.client.find_element_by_xpath("//iframe")
+            )
+        )
         return element
 
     def __str__(self):
         return self.name
 
     def __get_size(self, filename: str) -> int:
-        if os.path.isfile(filename): 
+        if os.path.isfile(filename):
             st = os.stat(filename)
             return st.st_size
         else:

@@ -1,7 +1,6 @@
 import re
 from typing import Tuple, Generator
 from selenium.webdriver.remote.webelement import WebElement
-from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from ..libs.engines import SpiderBase
 
@@ -30,7 +29,7 @@ class GridPlusEnergySpider(SpiderBase):
             retries += 1
             elements = container.find_elements_by_class_name('columns')
         yield tuple(elements)
-    
+
     def analyze_element(self, el: WebElement):
         plan_element = el.find_element_by_xpath('.//div[@class="price"]/div')
         product_name = plan_element.text

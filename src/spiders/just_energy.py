@@ -22,12 +22,20 @@ class JustEnergySpider(SpiderBase):
     def get_elements(self) -> Generator[Tuple[WebElement], None, None]:
         container = self.wait_until('product-rows', By.CLASS_NAME)
         elements = container.find_elements_by_xpath(
-            '//app-product-row//div[contains(@class, "product-list-item-v2")]//div[contains(@class, "row")][contains(@class, "tx-title-price-wrapper")][not(contains(@style, "display:none"))]')
+            '//app-product-row' +
+            '//div[contains(@class, "product-list-item-v2")]' +
+            '//div[contains(@class, "row")]' +
+            '[contains(@class, "tx-title-price-wrapper")]' +
+            '[not(contains(@style, "display:none"))]')
         retries = 0
         while retries < 5 and not elements:
             retries += 1
             elements = container.find_elements_by_xpath(
-            '//app-product-row//div[contains(@class, "product-list-item-v2")]//div[contains(@class, "row")][contains(@class, "tx-title-price-wrapper")][not(contains(@style, "display:none"))]')
+                '//app-product-row' +
+                '//div[contains(@class, "product-list-item-v2")]' +
+                '//div[contains(@class, "row")]' +
+                '[contains(@class, "tx-title-price-wrapper")]' +
+                '[not(contains(@style, "display:none"))]')
         yield tuple(elements)
 
     def analyze_element(self, el: WebElement):
@@ -48,16 +56,21 @@ class JustEnergySpider(SpiderBase):
             'div.column-title > h4')
         product_name = plan_element.text
 
-        view_detail_button = el.find_element_by_class_name("tx-view-details-btn")
+        view_detail_button = el.find_element_by_class_name(
+            "tx-view-details-btn")
         view_detail_button.click()
 
-        efl_download_modal_button = el.find_element_by_xpath('//a[@class="plan-documents"]')
+        efl_download_modal_button = el.find_element_by_xpath(
+            '//a[@class="plan-documents"]')
         efl_download_modal_button.click()
 
-        efl_download_btn = self.wait_until("//div[contains(@class, 'modal-dialog')]//div[@class='text-center']/a", By.XPATH)
+        efl_download_btn = self.wait_until(
+            "//div[contains(@class, 'modal-dialog')]" +
+            "//div[@class='text-center']/a", By.XPATH)
         efl_download_btn.click()
 
-        efl_download_modal = self.client.find_element_by_css_selector('div.modal-dialog div.modal-footer button')
+        efl_download_modal = self.client.find_element_by_css_selector(
+            'div.modal-dialog div.modal-footer button')
         efl_download_modal.click()
         sleep(1)
         view_detail_button.click()

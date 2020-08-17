@@ -40,6 +40,7 @@ from .town_square_energy import TownSquareEnergySpider
 from .summer_energy import SummerEnergySpider
 from .entrust_energy import EntrustEnergySpider
 from .green_mountain_energy import GreenMountEnergySpider
+from .viridian_energy import ViridianEnergySpider
 from .tomorrow_energy import TomorrowEnergySpider
 from .amigo_energy import AmigoEnergySpider
 from .tara_energy import TaraEnergySpider
@@ -90,6 +91,7 @@ REP_SPIDER_MAPPING = {
     "SUMM": SummerEnergySpider,
     "ENTR": EntrustEnergySpider,
     "GME": GreenMountEnergySpider,
+    "VIR": ViridianEnergySpider,
     "TOM": TomorrowEnergySpider,
     "AMIG": AmigoEnergySpider,
     "TARA": TaraEnergySpider,

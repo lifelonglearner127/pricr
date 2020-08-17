@@ -10,7 +10,8 @@ class element_has_attribute(object):
     def __call__(self, driver):
         element = driver.find_element(
             *self.locator)   # Finding the referenced element
-        if element.get_attribute("style") == 'display: none;':
+        if element.get_attribute("style") == '' \
+                or element.get_attribute("style") == 'display: none;':
             return element
         else:
             return False

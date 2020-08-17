@@ -1,5 +1,6 @@
 import os
 import re
+import logging
 from shutil import move
 from typing import List, Tuple, Generator
 from selenium.webdriver.remote.webelement import WebElement
@@ -20,8 +21,8 @@ class StreamEnergySpider(SpiderBase):
             self.log("Starting with %s..." % zipcode)
             try:
                 self.extract(zipcode)
-            except Exception:
-                continue
+            except Exception as e:
+                self.log(e, level=logging.ERROR)
         self.log("Finished!")
         return self.data
 

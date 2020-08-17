@@ -142,5 +142,13 @@
     "TOWN": {
         "name": "TOWN SQUARE ENERGY ",
         "website": "https://townsquareenergy.com/"
+    },
+    "AMIG": {
+        "name": "AMIGO ENERGY",
+        "website": "https://townsquareenergy.com/"
+    },
+    "TARA": {
+        "name": "TARA ENERGY",
+        "website": "https://townsquareenergy.com/"
     }
 }

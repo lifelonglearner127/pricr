@@ -158,5 +158,9 @@
     "VIR": {
         "name": "Viridian Energy",
         "website": "http://www.viridian.com/"
+    },
+    "TOM": {
+        "name": "TOMORROW ENERGY",
+        "website": "https://tomorrowenergy.com/"
     }
 }

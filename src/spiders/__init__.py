@@ -87,7 +87,7 @@ REP_SPIDER_MAPPING = {
     "SUMM": SummerEnergySpider,
     "ENTR": EntrustEnergySpider,
     "GME": GreenMountEnergySpider,
-    "TOM": TomorrowEnergySpider
+    "TOM": TomorrowEnergySpider,
     "AMIG": AmigoEnergySpider,
     "TARA": TaraEnergySpider,
 }

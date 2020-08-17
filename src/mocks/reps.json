@@ -146,5 +146,9 @@
     "ENTR": {
         "name": "ENTRUST ENERGY",
         "website": "http://www.entrustenergy.com"
+    },
+    "GME": {
+        "name": "Green Mountain Energy ",
+        "website": "www.greenmountainenergy.com/"
     }
 }

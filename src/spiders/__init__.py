@@ -38,6 +38,7 @@ from .power_newx import PowerNextSpider
 from .v247_energy_spider import V247EnergySpider
 from .town_square_energy import TownSquareEnergySpider
 from .entrust_energy import EntrustEnergySpider
+from .green_mountain_energy import GreenMountEnergySpider
 
 
 REP_SPIDER_MAPPING = {
@@ -79,5 +80,6 @@ REP_SPIDER_MAPPING = {
     "PWRN": PowerNextSpider,
     "V247": V247EnergySpider,
     "TOWN": TownSquareEnergySpider,
-    "ENTR": EntrustEnergySpider
+    "ENTR": EntrustEnergySpider,
+    "GME": GreenMountEnergySpider,
 }

@@ -40,7 +40,7 @@ from .town_square_energy import TownSquareEnergySpider
 from .summer_energy import SummerEnergySpider
 from .entrust_energy import EntrustEnergySpider
 from .green_mountain_energy import GreenMountEnergySpider
-
+from .tomorrow_energy import TomorrowEnergySpider
 
 REP_SPIDER_MAPPING = {
     "DE": DirectEnergySpider,
@@ -83,5 +83,6 @@ REP_SPIDER_MAPPING = {
     "TOWN": TownSquareEnergySpider,
     "SUMM": SummerEnergySpider,
     "ENTR": EntrustEnergySpider,
-    "GME": GreenMountEnergySpider
+    "GME": GreenMountEnergySpider,
+    "TOM": TomorrowEnergySpider
 }

@@ -117,13 +117,6 @@ class ViridianEnergySpider(SpiderBase):
         else:
             commodity = COMMODITY.electricity
 
-        # efl_link_element = el.find_element_by_css_selector(
-        #     'div.rate-wrapper > div.tabs-wrapper ' +
-        #     'div.full-plan-details div.plan-documents ' +
-        #     'ul.links li.rate-plan-summary')
-        # self.client.get(
-        #     efl_link_element.get_attribute('data-summary-url'))
-
         return {
             'term': term,
             'price': price,
@@ -139,4 +132,7 @@ class ViridianEnergySpider(SpiderBase):
     ) -> Optional[WebElement]:
         return WebDriverWait(
             self.client, timeout).until(
-                EC.visibl((by, identifier)))
+                EC.visibility_of_element_located((by, identifier)))
+
+    def wait_until_download_finish(self) -> bool:
+        pass

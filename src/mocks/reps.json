@@ -174,5 +174,9 @@
     "IBER": {
         "name": "Iberdrola",
         "website": "https://iberdrolatexas.com/"
+    },
+    "WIND": {
+        "name": "WINDROSE ENERGY",
+        "website": "https://www.windroseenergy.com/"
     }
 }

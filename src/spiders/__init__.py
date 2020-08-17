@@ -42,6 +42,11 @@ from .entrust_energy import EntrustEnergySpider
 from .green_mountain_energy import GreenMountEnergySpider
 from .viridian_energy import ViridianEnergySpider
 from .tomorrow_energy import TomorrowEnergySpider
+from .amigo_energy import AmigoEnergySpider
+from .tara_energy import TaraEnergySpider
+from .liberty_power import LibertyPowerSpider
+from .iberdrola import IberdrolaTexasSpider
+
 
 REP_SPIDER_MAPPING = {
     "DE": DirectEnergySpider,
@@ -86,5 +91,9 @@ REP_SPIDER_MAPPING = {
     "ENTR": EntrustEnergySpider,
     "GME": GreenMountEnergySpider,
     "VIR": ViridianEnergySpider,
-    "TOM": TomorrowEnergySpider
+    "TOM": TomorrowEnergySpider,
+    "AMIG": AmigoEnergySpider,
+    "TARA": TaraEnergySpider,
+    "LIB": LibertyPowerSpider,
+    "IBER": IberdrolaTexasSpider,
 }

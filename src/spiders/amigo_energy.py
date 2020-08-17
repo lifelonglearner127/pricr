@@ -70,5 +70,5 @@ class AmigoEnergyBaseSpider(SpiderBase):
 
 class AmigoEnergySpider(AmigoEnergyBaseSpider):
     name = 'Amigo Energy'
-    REP_ID = 'AMBT'
+    REP_ID = 'AMIG'
     base_url = 'https://www.amigoenergy.com/'

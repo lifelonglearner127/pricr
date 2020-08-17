@@ -41,7 +41,7 @@ class ViridianEnergySpider(SpiderBase):
                         zipcode, self.analyze_element(element)
                     )
                     self.log(
-                        "Skipped: downloading <%s>..." % entry.product_name)
+                        "Skipped downloading <%s>..." % entry.product_name)
                     # if self.wait_until_download_finish():
                     #     entry.filename = self.rename_downloaded(
                     #         zipcode, entry.product_name

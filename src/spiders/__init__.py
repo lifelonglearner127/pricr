@@ -45,6 +45,7 @@ from .tara_energy import TaraEnergySpider
 from .liberty_power import LibertyPowerSpider
 from .iberdrola import IberdrolaTexasSpider
 from .stream_energy import StreamEnergySpider
+from .wind_rose_energy import WindRoseEnergySpider
 
 
 REP_SPIDER_MAPPING = {
@@ -95,5 +96,6 @@ REP_SPIDER_MAPPING = {
     "TARA": TaraEnergySpider,
     "LIB": LibertyPowerSpider,
     "IBER": IberdrolaTexasSpider,
-    "STRM": StreamEnergySpider
+    "STRM": StreamEnergySpider,
+    "WIND": WindRoseEnergySpider,
 }

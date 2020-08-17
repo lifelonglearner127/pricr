@@ -41,6 +41,9 @@ from .summer_energy import SummerEnergySpider
 from .entrust_energy import EntrustEnergySpider
 from .green_mountain_energy import GreenMountEnergySpider
 from .tomorrow_energy import TomorrowEnergySpider
+from .amigo_energy import AmigoEnergySpider
+from .tara_energy import TaraEnergySpider
+
 
 REP_SPIDER_MAPPING = {
     "DE": DirectEnergySpider,
@@ -85,4 +88,6 @@ REP_SPIDER_MAPPING = {
     "ENTR": EntrustEnergySpider,
     "GME": GreenMountEnergySpider,
     "TOM": TomorrowEnergySpider
+    "AMIG": AmigoEnergySpider,
+    "TARA": TaraEnergySpider,
 }

@@ -158,5 +158,13 @@
     "TOM": {
         "name": "TOMORROW ENERGY",
         "website": "https://tomorrowenergy.com/"
+    },
+    "AMIG": {
+        "name": "AMIGO ENERGY",
+        "website": "https://townsquareenergy.com/"
+    },
+    "TARA": {
+        "name": "TARA ENERGY",
+        "website": "https://townsquareenergy.com/"
     }
 }

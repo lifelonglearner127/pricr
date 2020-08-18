@@ -186,5 +186,9 @@
     "WIND": {
         "name": "WINDROSE ENERGY",
         "website": "https://www.windroseenergy.com/"
+    },
+    "BULB": {
+        "name": "Bulb",
+        "website": "https://www.bulb.com/"
     }
 }

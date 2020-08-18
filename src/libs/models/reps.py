@@ -1,9 +1,8 @@
 import os
 import json
-from typing import Dict, Optional
-from importlib import import_module
+from typing import Dict, Optional, List
 from src.config import Config
-from src.spiders import SpiderInterface, REP_SPIDER_MAPPING
+from src.libs.engines import SpiderInterface, REP_SPIDER_MAPPING
 
 
 class RepItem:
@@ -19,14 +18,15 @@ class RepItem:
         name: str,
         website: str,
         zipcodes: List[str] = [],
-        crawler: Optional[str] = None
+        crawler: Optional[str] = None,
     ):
         self.rep_id = rep_id.upper()
         self.name = name
         self.website = website
         self.zipcodes = zipcodes
-        if rep_id in REP_SPIDER_MAPPING and\
-                issubclass(REP_SPIDER_MAPPING[rep_id], SpiderInterface):
+        if rep_id in REP_SPIDER_MAPPING and issubclass(
+            REP_SPIDER_MAPPING[rep_id], SpiderInterface
+        ):
             self.crawler = REP_SPIDER_MAPPING[rep_id]
 
     def __str__(self):
@@ -47,7 +47,7 @@ class RepModel(object):
             return self.__data[rep_id]
 
     def __load_data(self):
-        db_filename = os.path.join(Config.DB_PATH, 'reps.json')
+        db_filename = os.path.join(Config.DB_PATH, "reps.json")
         with open(db_filename) as content:
             json_content = json.load(content)
             for rep_id, rep_data in json_content.items():

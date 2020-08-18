@@ -1,5 +1,3 @@
-from typing import Tuple
-from src.libs.engines import SpiderInterface
 from .direct_energy import DirectEnergySpider
 from .four_change_energy import FourChangeEnergy
 from .chariot_energy import ChariotEnergySpider
@@ -37,6 +35,20 @@ from .new_power_spider import NewPowerEnergySpider
 from .power_newx import PowerNextSpider
 from .v247_energy_spider import V247EnergySpider
 from .town_square_energy import TownSquareEnergySpider
+from .summer_energy import SummerEnergySpider
+from .entrust_energy import EntrustEnergySpider
+from .green_mountain_energy import GreenMountEnergySpider
+from .viridian_energy import ViridianEnergySpider
+from .tomorrow_energy import TomorrowEnergySpider
+from .amigo_energy import AmigoEnergySpider
+from .tara_energy import TaraEnergySpider
+from .liberty_power import LibertyPowerSpider
+from .iberdrola import IberdrolaTexasSpider
+from .stream_energy import StreamEnergySpider
+from .wind_rose_energy import WindRoseEnergySpider
+from .bulb_energy import BulbEnergySpider
+from .mida_energy_service import MidaEnergySpider
+from .power_of_texas import PowerOfTexasSpider
 
 
 REP_SPIDER_MAPPING = {
@@ -77,5 +89,19 @@ REP_SPIDER_MAPPING = {
     "NEWP": NewPowerEnergySpider,
     "PWRN": PowerNextSpider,
     "V247": V247EnergySpider,
-    "TOWN": TownSquareEnergySpider
+    "TOWN": TownSquareEnergySpider,
+    "SUMM": SummerEnergySpider,
+    "ENTR": EntrustEnergySpider,
+    "GME": GreenMountEnergySpider,
+    "VIR": ViridianEnergySpider,
+    "TOM": TomorrowEnergySpider,
+    "AMIG": AmigoEnergySpider,
+    "TARA": TaraEnergySpider,
+    "LIB": LibertyPowerSpider,
+    "IBER": IberdrolaTexasSpider,
+    "STRM": StreamEnergySpider,
+    "WIND": WindRoseEnergySpider,
+    "BULB": BulbEnergySpider,
+    "MIDA": MidaEnergySpider,
+    "POT": PowerOfTexasSpider,
 }

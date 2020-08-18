@@ -142,5 +142,61 @@
     "TOWN": {
         "name": "TOWN SQUARE ENERGY ",
         "website": "https://townsquareenergy.com/"
+    },
+    "STRM": {
+        "name": "Stream Energy ",
+        "website": "www.mystream.com/"
+    },
+    "SUMM": {
+        "name": "SUMMER ENERGY",
+        "website": "https://www.summerenergy.com/"
+    },
+    "ENTR": {
+        "name": "ENTRUST ENERGY",
+        "website": "http://www.entrustenergy.com"
+    },
+    "GME": {
+        "name": "Green Mountain Energy ",
+        "website": "www.greenmountainenergy.com/"
+    },
+    "VIR": {
+        "name": "Viridian Energy",
+        "website": "http://www.viridian.com/"
+    },
+    "TOM": {
+        "name": "TOMORROW ENERGY",
+        "website": "https://tomorrowenergy.com/"
+    },
+    "AMIG": {
+        "name": "AMIGO ENERGY",
+        "website": "https://townsquareenergy.com/"
+    },
+    "TARA": {
+        "name": "TARA ENERGY",
+        "website": "https://townsquareenergy.com/"
+    },
+    "LIB": {
+        "name": "Liberty Power",
+        "website": "https://www.libertypowercorp.com/"
+    },
+    "IBER": {
+        "name": "Iberdrola",
+        "website": "https://iberdrolatexas.com/"
+    },
+    "WIND": {
+        "name": "WINDROSE ENERGY",
+        "website": "https://www.windroseenergy.com/"
+    },
+    "BULB": {
+        "name": "Bulb",
+        "website": "https://www.bulb.com/"
+    },
+    "MIDA": {
+        "name": "MIDAMERICAN ENERGY SERVICES",
+        "website": "http://www.midamericanenergyservices.com/"
+    },
+    "POT": {
+        "name": "POWER OF TEXAS",
+        "website": "http://www.poweroftexas.com"
     }
 }

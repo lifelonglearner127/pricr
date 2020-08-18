@@ -25,7 +25,7 @@ class SparkEnergySpider(SpiderBase):
             retries += 1
             elements = container.find_elements_by_class_name('rate-item')
         yield tuple(elements)
-    
+
     def analyze_element(self, el: WebElement):
         term_element = el.find_element_by_xpath(
             './/div[@class="row"]/div[1]/span')
@@ -35,7 +35,7 @@ class SparkEnergySpider(SpiderBase):
         else:
             term = 1
         self.wait_for()
-        
+
         plan_element = el.find_element_by_xpath(
             './/div[@id="product-left"]/h2')
         product_name = plan_element.text
@@ -51,7 +51,7 @@ class SparkEnergySpider(SpiderBase):
         efl_element = el.find_element_by_xpath(
             './/div[@id="product-details-right"]/ul/li[1]/a')
         self.client.execute_script("arguments[0].click();", efl_element)
-        
+
         return {
             'term': term,
             'price': price,

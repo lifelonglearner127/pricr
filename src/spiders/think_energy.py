@@ -37,7 +37,7 @@ class ThinkEnergySpider(SpiderBase):
         self.client.switch_to.window(main_client)
         self.wait_for()
         return self.client
-    
+
     def analyze_element(self, el: WebElement):
         term_element = el.find_element_by_xpath(
             './/div[@class="term-description"]')
@@ -47,7 +47,7 @@ class ThinkEnergySpider(SpiderBase):
         else:
             term = 1
         self.wait_for()
-        
+
         plan_element = el.find_element_by_class_name('description-title ')
         product_name = plan_element.text
 
@@ -59,12 +59,12 @@ class ThinkEnergySpider(SpiderBase):
         detail_link = el.find_element_by_xpath(
             './/a[@class="detailsButton"]')
         self.client.execute_script("arguments[0].click();", detail_link)
-        
+
         efl_element = el.find_element_by_xpath(
             './/div[@class="planInfoHolder"]//a[1]')
         efl_url = efl_element.get_attribute('href')
         self.__download_pdf(efl_url, '//embed')
-        
+
         return {
             'term': term,
             'price': price,

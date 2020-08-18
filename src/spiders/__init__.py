@@ -48,6 +48,7 @@ from .stream_energy import StreamEnergySpider
 from .wind_rose_energy import WindRoseEnergySpider
 from .bulb_energy import BulbEnergySpider
 from .mida_energy_service import MidaEnergySpider
+from .power_of_texas import PowerOfTexasSpider
 
 
 REP_SPIDER_MAPPING = {
@@ -101,5 +102,6 @@ REP_SPIDER_MAPPING = {
     "STRM": StreamEnergySpider,
     "WIND": WindRoseEnergySpider,
     "BULB": BulbEnergySpider,
-    "MIDA": MidaEnergySpider
+    "MIDA": MidaEnergySpider,
+    "POT": PowerOfTexasSpider,
 }

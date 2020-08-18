@@ -56,9 +56,11 @@ class MidaEnergySpider(SpiderBase):
             './div[@class="row"]/div[1]/div[2]/strong')
         product_name = plan_element.text
 
-        self.client.find_element_by_xpath(
-            '//button[@aria-controls="collapse-{}"]'.format(plan_id)
-        ).click()
+        collapse_btn = self.wait_until(
+            '//button[@aria-controls="collapse-{}"]'.format(plan_id),
+            By.XPATH
+        )
+        self.client.execute_script("arguments[0].click();", collapse_btn)
 
         term_element = self.wait_until(
             '//div[@id="collapse-{}"]/div[1]/div[1]/div[3]'.format(plan_id),

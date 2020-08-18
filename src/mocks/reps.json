@@ -190,5 +190,9 @@
     "BULB": {
         "name": "Bulb",
         "website": "https://www.bulb.com/"
+    },
+    "MIDA": {
+        "name": "MIDAMERICAN ENERGY SERVICES",
+        "website": "http://www.midamericanenergyservices.com/"
     }
 }

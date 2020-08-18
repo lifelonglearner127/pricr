@@ -198,5 +198,9 @@
     "POT": {
         "name": "POWER OF TEXAS",
         "website": "http://www.poweroftexas.com"
+    },
+    "EREW": {
+        "name": "Power Rewards",
+        "website": "https://www.credoenergy.com/"
     }
 }

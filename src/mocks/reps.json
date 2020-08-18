@@ -190,5 +190,9 @@
     "BULB": {
         "name": "Bulb",
         "website": "https://www.bulb.com/"
+    },
+    "POT": {
+        "name": "POWER OF TEXAS",
+        "website": "http://www.poweroftexas.com"
     }
 }

@@ -202,5 +202,9 @@
     "EREW": {
         "name": "Power Rewards",
         "website": "https://www.credoenergy.com/"
+    },
+    "TITAN": {
+        "name": "Titan Gas and Power",
+        "website": "https://rates.cleanskyenergy.com/"
     }
 }

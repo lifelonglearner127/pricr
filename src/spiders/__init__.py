@@ -50,6 +50,7 @@ from .bulb_energy import BulbEnergySpider
 from .mida_energy_service import MidaEnergySpider
 from .power_of_texas import PowerOfTexasSpider
 from .energy_rewards import EnergyRewardsSpider
+from .titan_gas_power import TitanGasPowerSpider
 
 
 REP_SPIDER_MAPPING = {
@@ -106,4 +107,5 @@ REP_SPIDER_MAPPING = {
     "MIDA": MidaEnergySpider,
     "POT": PowerOfTexasSpider,
     "EREW": EnergyRewardsSpider,
+    "TITAN": TitanGasPowerSpider,
 }

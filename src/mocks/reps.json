@@ -206,5 +206,13 @@
     "XOOM": {
         "name": "Xoom Energy",
         "website": "https://xoomenergy.com/"
+    },
+    "CLEAR": {
+        "name": "CLEARVIEW ENERGY",
+        "website": "https://www.clearviewenergy.com/"
+    },
+    "TITAN": {
+        "name": "Titan Gas and Power",
+        "website": "https://rates.cleanskyenergy.com/"
     }
 }

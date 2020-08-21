@@ -51,6 +51,8 @@ from .mida_energy_service import MidaEnergySpider
 from .power_of_texas import PowerOfTexasSpider
 from .energy_rewards import EnergyRewardsSpider
 from .xoom_energy import XoomEnergySpider
+from .clearview_energy import ClearviewEnergySpider
+from .titan_gas_power import TitanGasPowerSpider
 
 
 REP_SPIDER_MAPPING = {
@@ -108,4 +110,6 @@ REP_SPIDER_MAPPING = {
     "POT": PowerOfTexasSpider,
     "EREW": EnergyRewardsSpider,
     "XOOM": XoomEnergySpider,
+    "CLEAR": ClearviewEnergySpider,
+    "TITAN": TitanGasPowerSpider,
 }

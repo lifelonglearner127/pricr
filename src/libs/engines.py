@@ -88,13 +88,14 @@ class SpiderBase(SpiderInterface):
 
     def visit_first_or_next_commodity_page(self, zipcode: str):
         # TODO: Please consider to use self.current_utility_index
-        if self.current_utility_index > 0:
+        if self.current_commodity_index > 0:
             """When it requires to enter zipcode again
             """
             self.get_commodity_link_elements()[
                 self.current_commodity_index].click()
+            self.wait_for()
 
-    def get_all_commodity_pages(self, zipcode: str) -> Generator:
+    def iter_all_commodity_pages(self, zipcode: str) -> Generator:
         while self.current_commodity_index < self.get_commodity_link_count():
             self.visit_first_or_next_commodity_page(zipcode)
             yield self.current_commodity_index
@@ -103,10 +104,10 @@ class SpiderBase(SpiderInterface):
         self.log("Analyzing %d-th utility..." % self.current_utility_index)
         self.current_commodity_index = 0
 
-        self.wait_for(3)
+        self.wait_for(1)
 
         if self.check_if_multiple_commodities():
-            for _ in self.get_all_commodity_pages(zipcode):
+            for _ in self.iter_all_commodity_pages(zipcode):
                 self.parse_plans_page(zipcode)
         else:
             self.parse_plans_page(zipcode)
@@ -127,6 +128,9 @@ class SpiderBase(SpiderInterface):
             """When it requires to enter zipcode again
             """
             self.change_zipcode(zipcode)
+            self.wait_for()
+
+        # TODO: next utility link should be clicked here.
 
     def get_utility_page_link_elements(self) -> List[WebElement]:
         return []
@@ -149,6 +153,7 @@ class SpiderBase(SpiderInterface):
         self.log("Parsing %d-th commodity(%s)" % (
             self.current_commodity_index, self.get_commodity()
         ))
+        self.wait_for()
         for elements in self.get_elements():
             for element in elements:
                 item = self.analyze_element(element)
@@ -174,6 +179,8 @@ class SpiderBase(SpiderInterface):
         """NOTE: Started with submitting a zip code
         When multiple utilies appear, please make sure to submit zipcode.
         """
+        self.current_utility_index = 0
+        self.current_commodity_index = 0
         self.log("Searching with zip code - %s" % zipcode)
         self.submit_zipcode(zipcode)
         self.hook_after_zipcode_submit()
@@ -187,13 +194,20 @@ class SpiderBase(SpiderInterface):
             self.analyze_single_utility(zipcode)
 
     def __create_filename(self, base_filename: str) -> str:
-        if os.path.isfile(base_filename):
+        path_name = os.path.join(
+            self.client.get_pdf_download_path(), base_filename)
+        if os.path.isfile(path_name):
             filename, extension = os.path.splitext(base_filename)
             index = 0
             new_filename = f"{filename}-({index}).{extension}"
-            while os.path.isfile(new_filename):
+            path_name = os.path.join(
+                self.client.get_pdf_download_path(), new_filename)
+            while os.path.isfile(path_name):
                 index += 1
                 new_filename = f"{filename}-({index}).{extension}"
+                path_name = os.path.join(
+                    self.client.get_pdf_download_path(),
+                    new_filename)
             return new_filename
         else:
             return base_filename
@@ -276,7 +290,9 @@ class SpiderBase(SpiderInterface):
         current_filename = self._get_last_downloaded_file()
         while not current_filename:
             retries += 1
-            self.wait_for(retries)
+            self.wait_for()
+            if retries > MAX_RETRIES:
+                break
             current_filename = self._get_last_downloaded_file()
 
         if not current_filename:

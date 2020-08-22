@@ -101,7 +101,6 @@ class DirectEnergySpider(SpiderBase):
     def visit_first_or_next_utility_page(self, zipcode: str):
         super().visit_first_or_next_utility_page(zipcode)
 
-        self.wait_for()
         self.close_feedback_modal()
 
         self.wait_for()
@@ -119,6 +118,10 @@ class DirectEnergySpider(SpiderBase):
         except NoSuchElementException as e:
             self.log(str(e))
             return []
+
+    def parse_plans_page(self, zipcode: str) -> None:
+        self.wait_for(2)
+        super().parse_plans_page(zipcode)
 
     def get_commodity_link_elements(self) -> List[WebElement]:
         try:

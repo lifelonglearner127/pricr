@@ -74,4 +74,10 @@ class Browser(webdriver.Chrome):
     def quit(self):
         if platform not in ["win32", "win64"] and not Config.DEBUG:
             self.display.stop()
+        if Config.DEBUG:
+            filename = os.path.join(
+                self.report_path,
+                "last_screenshot.png"
+            )
+            self.save_screenshot(filename)
         super().quit()

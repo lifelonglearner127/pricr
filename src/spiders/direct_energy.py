@@ -98,8 +98,8 @@ class DirectEnergySpider(SpiderBase):
         except NoSuchElementException:
             pass
 
-    def visit_first_or_next_utility_page(self, zipcode: str):
-        super().visit_first_or_next_utility_page(zipcode)
+    def visit_or_select_utility_page(self, zipcode: str):
+        super().visit_or_select_utility_page(zipcode)
 
         self.close_feedback_modal()
 

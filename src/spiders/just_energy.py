@@ -17,9 +17,9 @@ class JustEnergySpider(UtilityByCommoditySpider):
         '#/enrollment/US/IL/SVC/residential-plans'
 
     def submit_zipcode(self, zipcode: str):
-        zipcode_element = self.wait_until('postalCode')
-        # zipcode_element = self.client.find_element_by_xpath(
-        #     '//form//input[@id="postalCode"]')
+        self.wait_for(5)
+        zipcode_element = self.client.find_element_by_xpath(
+            '//form//input[@id="postalCode"]')
         zipcode_element.clear()
         zipcode_element.send_keys(zipcode)
         zipcode_element.send_keys(Keys.ENTER)

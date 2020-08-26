@@ -1,6 +1,7 @@
 import os
 import csv
 import time
+import logging
 from warnings import warn
 from typing import List, Dict
 from src.config import Config
@@ -21,6 +22,10 @@ class Crawler(object):
     def client(self) -> Browser:
         return self.__client
 
+    def log(self, msg: str, level: int = logging.INFO):
+        print(msg)
+        logging.log(level, "Crawler: %s" % msg)
+
     def start(self, todos: Dict[str, List[str]]):
         """Starting point
           - param: todos
@@ -31,7 +36,9 @@ class Crawler(object):
         result = []
         for rep_id, zipcodes in todos.items():
             if rep_id not in REP_SPIDER_MAPPING:
-                print("Spider not implemented for %s" % rep_id)
+                self.log(
+                    "Spider not implemented for %s" % rep_id,
+                    level=logging.ERROR)
                 continue
             SpiderClass = REP_SPIDER_MAPPING[rep_id]
 
@@ -73,8 +80,10 @@ class Crawler(object):
         if Config.DEBUG:
             raise e
         else:
-            print("%s failed to scrap data." % spider.name)
-            print(e)
+            self.log(
+                "%s failed to scrap data." % spider.name,
+                level=logging.ERROR)
+            self.log(str(e), level=logging.ERROR)
 
     def wait_downloading(self):
         # NOTE: Need to wait until downloading is finished.

@@ -70,7 +70,11 @@ class DirectEnergySpider(SpiderBase):
             efl_download_link_element = el.find_element_by_css_selector(
                 'div.card-body.plan-box div.gridPlanLinks span.efl_link a, ' +
                 'div.card-body.plan-box div.gridPlanLinks ' +
-                'span.rate_plan_link a')
+                'span.rate_plan_link a, ' +
+                'div.card-body.plan-box div.gridPlanLinks ' +
+                'span.contract_summary_link a, ' +
+                'div.card-body.plan-box div.gridPlanLinks ' +
+                'span.disclosure_statement_link a')
             efl_download_link_element.click()
         except NoSuchElementException:
             self.log("Failed to find EFL Link.", level=logging.WARNING)
@@ -84,8 +88,8 @@ class DirectEnergySpider(SpiderBase):
             multiple_utility_modal = self.client.find_element_by_id(
                 'popup-window')
             return multiple_utility_modal.is_displayed()
-        except NoSuchElementException as e:
-            self.log(str(e))
+        except NoSuchElementException:
+            self.log("Going with Single utility.")
             return False
 
     def close_feedback_modal(self):
@@ -128,8 +132,8 @@ class DirectEnergySpider(SpiderBase):
             elements = self.client.find_elements_by_css_selector(
                 'div.grid-widget div.fauxTab a')
             return elements
-        except NoSuchElementException as e:
-            self.log(str(e))
+        except NoSuchElementException:
+            self.log("Found single commodity provider.")
             return []
 
     def check_if_multiple_commodities(self) -> bool:

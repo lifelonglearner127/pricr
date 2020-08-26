@@ -1,9 +1,10 @@
 import re
+import logging
 from typing import Tuple, Generator, List
 from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.common.by import By
+# from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import Select
 from ..libs.models import COMMODITY
 from ..libs.engines import UtilityByCommoditySpider
@@ -12,17 +13,20 @@ from ..libs.engines import UtilityByCommoditySpider
 class JustEnergySpider(UtilityByCommoditySpider):
     name = 'Just Energy'
     REP_ID = 'JE'
-    # base_url = 'https://www.justenergy.com/'
-    base_url = 'https://justenergy.com/residential-plans' +\
-        '#/enrollment/US/IL/SVC/residential-plans'
+    base_url = 'https://www.justenergy.com/'
+    # base_url = 'https://justenergy.com/residential-plans' +\
+    #     '#/enrollment/US/IL/SVC/residential-plans'
 
     def submit_zipcode(self, zipcode: str):
-        self.wait_for(5)
+        self.wait_for()
         zipcode_element = self.client.find_element_by_xpath(
-            '//form//input[@id="postalCode"]')
+            '//form//input[@id="zip"]')
+        # submit_button = self.client.find_element_by_xpath(
+        #     '//form//button')
         zipcode_element.clear()
         zipcode_element.send_keys(zipcode)
         zipcode_element.send_keys(Keys.ENTER)
+        # submit_button.click()
 
     def hook_after_zipcode_submit(self):
         self.wait_for(10)
@@ -66,9 +70,9 @@ class JustEnergySpider(UtilityByCommoditySpider):
             pass
 
     def get_utility_page_link_elements(self) -> List[WebElement]:
+        self.wait_for(1)
         try:
             if self.current_utility_index > 0:
-                self.wait_for()
                 modal_link = self.client.find_element_by_css_selector(
                     'div.div-utilitydisplay a#a-utilitydisplay-ELE,' +
                     'div.div-utilitydisplay a#a-utilitydisplay-GAS')
@@ -80,23 +84,24 @@ class JustEnergySpider(UtilityByCommoditySpider):
                 'div.type-utility-selector select#utilitySelector option')
             return utility_options[1:]
         except NoSuchElementException:
+            self.log("Found single utility mode.")
             return []
 
     def check_if_multiple_utilities(self) -> bool:
         return bool(self.get_utility_page_link_elements())
 
     def get_elements(self) -> Generator[Tuple[WebElement], None, None]:
-        self.wait_until(
-            'div.product-rows div.product-list-item-v2',
-            By.CSS_SELECTOR)
-        elements = self.client.find_elements_by_css_selector(
-            'div.product-rows div.product-list-item-v2')
-        retries = 0
-        while retries < 5 and not elements:
-            retries += 1
+        self.wait_for(10)
+
+        try:
             elements = self.client.find_elements_by_css_selector(
                 'div.product-rows div.product-list-item-v2')
-        yield tuple(elements)
+            yield tuple(elements)
+        except NoSuchElementException:
+            self.log(
+                "No plans found. This might be a bug.",
+                level=logging.WARNING)
+            yield []
 
     def analyze_element(self, el: WebElement):
         self.wait_for(2)
@@ -135,9 +140,14 @@ class JustEnergySpider(UtilityByCommoditySpider):
                 '[contains(., "Contract Summary")]')
             efl_download_modal_button.click()
 
-            efl_download_btn = self.wait_until(
+            self.wait_for(10)
+            # efl_download_btn = self.wait_until(
+            #     "//div[contains(@class, 'modal-dialog')]" +
+            #     "//div[@class='text-center']/a",
+            #     By.XPATH, timeout=30)
+            efl_download_btn = self.client.find_element_by_xpath(
                 "//div[contains(@class, 'modal-dialog')]" +
-                "//div[@class='text-center']/a", By.XPATH)
+                "//div[@class='text-center']/a")
             efl_download_btn.click()
             skip_download = False
 
@@ -148,7 +158,7 @@ class JustEnergySpider(UtilityByCommoditySpider):
         except NoSuchElementException:
             skip_download = True
 
-        self.wait_for()
+        self.wait_for(3)
 
         try:
             view_detail_button = el.find_element_by_css_selector(

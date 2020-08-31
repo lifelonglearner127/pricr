@@ -1,8 +1,22 @@
 import os
 import sys
 import json
+import yaml
 from src.config import Config
-from src.base import Crawler
+from src.base import Crawler, CrawelrV2
+
+
+def run_by_yaml():
+    filename = os.path.join(os.path.dirname(__file__), 'debug.yml')
+    if not os.path.isfile(filename):
+        return False
+
+    with open(filename, 'r') as f:
+        items = yaml.safe_load(f)
+
+    if items:
+        crawler = CrawelrV2()
+        crawler.start(items)
 
 
 def run():
@@ -21,4 +35,5 @@ def run():
 
 
 if __name__ == "__main__":
-    run()
+    # run()
+    run_by_yaml()

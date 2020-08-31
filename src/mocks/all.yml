@@ -1,0 +1,10 @@
+DE:
+  - 
+    zipcode: 77016
+    commodity: elec
+  - 
+    zipcode: 77580
+    commodity: gas
+  -
+    zipcode: 06101
+    commodity: gas

@@ -7,8 +7,9 @@ from typing import List, Dict
 from src.config import Config
 from src.libs.browsers import Browser
 from src.libs.models import Entry
+from src.libs.models.instructions import Instruction
 from src.libs.engines import SpiderInterface
-from src.spiders import REP_SPIDER_MAPPING
+from src.spiders import REP_SPIDER_MAPPING, REP_MULTI_STATE_SPIDER_MAPPING
 
 
 class Crawler(object):
@@ -98,3 +99,38 @@ class Crawler(object):
                 break
 
         self.client.quit()
+
+
+class CrawelrV2(Crawler):
+    def start(self, todos: Dict[str, List[Dict[str, str]]]):
+        """Starting point
+          - param: todos
+            {
+                "REP_ID": [{
+                    "zipcode": "77016",
+                    "commodity": "elec"
+                }, {
+                    "zipcode": "77580",
+                    "commodity": "gas"
+                }, ...]
+            }
+        """
+        result = []
+        for rep_id, units in todos.items():
+            if rep_id not in REP_MULTI_STATE_SPIDER_MAPPING:
+                self.log(
+                    f"{rep_id} spider doesn't support multi state yet",
+                    level=logging.ERROR)
+                continue
+            SpiderClass = REP_MULTI_STATE_SPIDER_MAPPING[rep_id]
+
+            try:
+                spider = SpiderClass(self.client)
+                result = spider.run([
+                    Instruction(**item) for item in units
+                ])
+                self.write_to_csv(result)
+            except Exception as e:
+                self.manage_spider_failure(spider, e)
+
+        self.wait_downloading()

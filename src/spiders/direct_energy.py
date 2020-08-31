@@ -4,11 +4,11 @@ from typing import Tuple, Generator, List
 from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.common.keys import Keys
-from ..libs.engines import SpiderBase
+from ..libs.engines import SpiderBase, OneOffMixin
 from ..libs.models import COMMODITY
 
 
-class DirectEnergySpider(SpiderBase):
+class DirectEnergySpider(OneOffMixin, SpiderBase):
     name = 'Direct Energy'
     REP_ID = 'DE'
     base_url = 'https://www.directenergy.com/'

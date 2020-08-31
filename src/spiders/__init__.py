@@ -113,3 +113,8 @@ REP_SPIDER_MAPPING = {
     "CLEAR": ClearviewEnergySpider,
     "TITAN": TitanGasPowerSpider,
 }
+
+REP_MULTI_STATE_SPIDER_MAPPING = {
+    "DE": DirectEnergySpider,
+    "JE": JustEnergySpider,
+}

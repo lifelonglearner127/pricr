@@ -32,7 +32,9 @@ class SpiderInterface(object):
     def analyze_element(self, el: WebElement) -> dict:
         raise NotImplementedError()
 
-    def extract(self, zipcode: str) -> None:
+    def extract(
+        self, zipcode: str, commodity: str = COMMODITY.electricity
+    ) -> None:
         raise NotImplementedError()
 
     def check_if_multiple_utilities(self) -> bool:
@@ -177,7 +179,9 @@ class SpiderBase(SpiderInterface):
                             zipcode, entry.product_name)
                 self.data.append(entry)
 
-    def extract(self, zipcode: str) -> None:
+    def extract(
+        self, zipcode: str, commodity: str = COMMODITY.electricity
+    ) -> None:
         """NOTE: Started with submitting a zip code
         When multiple utilies appear, please make sure to submit zipcode.
         """
@@ -349,7 +353,9 @@ class UtilityByCommoditySpider(SpiderBase):
         else:
             self.parse_plans_page(zipcode)
 
-    def extract(self, zipcode: str) -> None:
+    def extract(
+        self, zipcode: str, commodity: str = COMMODITY.electricity
+    ) -> None:
         """NOTE: Started with submitting a zip code
         When multiple utilies appear, please make sure to submit zipcode.
         """

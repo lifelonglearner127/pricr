@@ -6,11 +6,11 @@ from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.common.keys import Keys
 # from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import Select
-from ..libs.models import COMMODITY
-from ..libs.engines import UtilityByCommoditySpider
+# from ..libs.models import COMMODITY
+from ..libs.engines import UtilityByCommodityMixin, OneOffMixin, SpiderBase
 
 
-class JustEnergySpider(UtilityByCommoditySpider):
+class JustEnergySpider(UtilityByCommodityMixin, OneOffMixin, SpiderBase):
     name = 'Just Energy'
     REP_ID = 'JE'
     base_url = 'https://www.justenergy.com/'
@@ -29,7 +29,7 @@ class JustEnergySpider(UtilityByCommoditySpider):
         # submit_button.click()
 
     def hook_after_zipcode_submit(self):
-        self.wait_for(10)
+        self.wait_for(15)
 
     def check_if_multiple_commodities(self) -> bool:
         try:
@@ -47,11 +47,11 @@ class JustEnergySpider(UtilityByCommoditySpider):
         )
         return elements
 
-    def get_commodity(self):
-        if self.current_commodity_index == 0:
-            return COMMODITY.electricity
-        else:
-            return COMMODITY.natural_gas
+    # def get_commodity(self):
+    #     if self.current_commodity_index == 0:
+    #         return COMMODITY.electricity
+    #     else:
+    #         return COMMODITY.natural_gas
 
     def get_utilities_count(self) -> int:
         return len(self.get_utility_page_link_elements())
@@ -95,7 +95,8 @@ class JustEnergySpider(UtilityByCommoditySpider):
 
         try:
             elements = self.client.find_elements_by_css_selector(
-                'div.product-rows div.product-list-item-v2')
+                'div.product-rows div.product-list-item-v2,' +
+                'div.utility-products div.card')
             yield tuple(elements)
         except NoSuchElementException:
             self.log(
@@ -106,7 +107,7 @@ class JustEnergySpider(UtilityByCommoditySpider):
     def analyze_element(self, el: WebElement):
         self.wait_for(2)
         term_element = el.find_element_by_css_selector(
-            'p.plan-term-type')
+            'p.plan-term-type, div.card-body div.plan')
         term = term_element.text
         match = re.search(r'(\d+)\s+Month', term)
         if match:
@@ -115,11 +116,12 @@ class JustEnergySpider(UtilityByCommoditySpider):
             raise Exception("Term could not match. (%s)" % term)
 
         price_element = el.find_element_by_css_selector(
-            'div.column-price div.price span.currency-unit')
+            'div.column-price div.price span.currency-unit,' +
+            'div.card-body div.price')
         price = price_element.text.split('¢')[0]
 
         plan_element = el.find_element_by_css_selector(
-            'div.column-title > h4')
+            'div.column-title > h4, div.card-body h4.title')
         product_name = plan_element.text
 
         try:
@@ -176,4 +178,24 @@ class JustEnergySpider(UtilityByCommoditySpider):
             'price': price,
             'product_name': product_name,
             'skip_download': skip_download,
+            'commodity': self.get_commodity(),
         }
+
+    def check_if_service_unavailable(self):
+        try:
+            element = self.client.find_element_by_id('no-product-title')
+            return element.is_displayed()
+        except NoSuchElementException:
+            return False
+
+    def _click_view_all_if_exists(self):
+        try:
+            button = self.client.find_element_by_id('btn-viewalloptions')
+            button.click()
+            self.wait_for(10)
+        except NoSuchElementException:
+            pass
+
+    def parse_plans_page(self, zipcode: str):
+        self._click_view_all_if_exists()
+        super().parse_plans_page(zipcode)

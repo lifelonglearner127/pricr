@@ -8,4 +8,4 @@ class Config:
     DOWNLOAD_BASE_PATH = os.path.join(BASE_DIR, 'downloads')
     LOG_FILE = os.path.join(BASE_DIR, 'spider.log')
     DB_PATH = os.path.join(BASE_DIR, 'src', 'mocks')
-    USE_YAML = bool(os.environ.get('USE_YAML'), True)
+    USE_YAML = bool(os.environ.get('USE_YAML', True))

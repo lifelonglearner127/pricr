@@ -1,7 +1,7 @@
 __all__ = [
-    'SpiderInterface', 'SpiderBase', 'UtilityByCommoditySpider',
+    'SpiderInterface', 'SpiderBase', 'UtilityByCommodityMixin',
     'OneOffMixin']
 
 
-from .base import SpiderInterface, SpiderBase, UtilityByCommoditySpider
-from .mixins import OneOffMixin
+from .base import SpiderInterface, SpiderBase
+from .mixins import OneOffMixin, UtilityByCommodityMixin

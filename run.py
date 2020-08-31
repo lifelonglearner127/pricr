@@ -6,11 +6,7 @@ from src.config import Config
 from src.base import Crawler, CrawelrV2
 
 
-def run_by_yaml():
-    filename = os.path.join(os.path.dirname(__file__), 'debug.yml')
-    if not os.path.isfile(filename):
-        return False
-
+def run_by_yaml(filename: str):
     with open(filename, 'r') as f:
         items = yaml.safe_load(f)
 
@@ -19,21 +15,36 @@ def run_by_yaml():
         crawler.start(items)
 
 
-def run():
-    if len(sys.argv) > 1:
-        filename = sys.argv[1]
-    else:
-        filename = "all.json"
-    filename = os.path.join(Config.BASE_DIR, "src", "mocks", filename)
+def run_by_json(filename: str):
     with open(filename, "r") as content:
         instructions = json.load(content)
 
     if instructions:
         crawler = Crawler()
         crawler.start(instructions)
+
+
+def run():
+    if len(sys.argv) > 1:
+        filename = sys.argv[1]
+    else:
+        filename = 'all'
+
+    if Config.USE_YAML:
+        filename += '.yml'
+    else:
+        filename += '.json'
+
+    filename = os.path.join(Config.BASE_DIR, "src", "mocks", filename)
+    if not os.path.isfile(filename):
+        raise FileNotFoundError()
+
+    if Config.USE_YAML:
+        run_by_yaml(filename)
+    else:
+        run_by_json(filename)
     print("DONE!")
 
 
 if __name__ == "__main__":
-    # run()
-    run_by_yaml()
+    run()

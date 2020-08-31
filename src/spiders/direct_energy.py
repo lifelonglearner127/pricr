@@ -13,15 +13,15 @@ class DirectEnergySpider(OneOffMixin, SpiderBase):
     REP_ID = 'DE'
     base_url = 'https://www.directenergy.com/'
 
-    def get_commodity(self) -> str:
-        if self.current_commodity_index == 0:
-            return COMMODITY.electricity
-        elif self.current_commodity_index == 1:
-            return COMMODITY.natural_gas
-        else:
-            self.log(
-                "commodity_index is greater than 1.",
-                level=logging.ERROR)
+    # def get_commodity(self) -> str:
+    #     if self.current_commodity_index == 0:
+    #         return COMMODITY.electricity
+    #     elif self.current_commodity_index == 1:
+    #         return COMMODITY.natural_gas
+    #     else:
+    #         self.log(
+    #             "commodity_index is greater than 1.",
+    #             level=logging.ERROR)
 
     def submit_zipcode(self, zipcode: str):
         self.close_feedback_modal()
@@ -138,3 +138,23 @@ class DirectEnergySpider(OneOffMixin, SpiderBase):
 
     def check_if_multiple_commodities(self) -> bool:
         return bool(self.get_commodity_link_elements())
+
+    def go_to_commodity(self, commodity: str = COMMODITY.electricity):
+        if commodity == COMMODITY.electricity:
+            self.get_commodity_link_elements()[0].click()
+        elif commodity == COMMODITY.natural_gas:
+            self.get_commodity_link_elements()[1].click()
+        else:
+            self.log("Unexpected commodity found - %s" % commodity)
+            return
+
+        self.wait_for()
+
+    def check_if_service_unavailable(self) -> bool:
+        try:
+            self.client.find_element_by_css_selector(
+                'div#popup_content div.dialogUnserviceable'
+            )
+            return True
+        except NoSuchElementException:
+            return False

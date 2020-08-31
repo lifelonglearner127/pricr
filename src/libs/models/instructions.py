@@ -11,7 +11,7 @@ class Instruction(object):
         'gas': COMMODITY.natural_gas
     }
 
-    def __init__(self, zipcode: str, commodity: str = COMMODITY.electricity):
+    def __init__(self, zipcode: str, commodity: str = 'elec'):
         self.zipcode = zipcode
         self.commodity = commodity
 

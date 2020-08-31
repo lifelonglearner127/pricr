@@ -90,6 +90,7 @@ class EnergyRewardsSpider(SpiderBase):
         efl_element = modal.find_element_by_xpath(
             './/div[@class="container-fluid"]/div[4]/div[3]/a[3]')
         self.client.execute_script("arguments[0].click();", efl_element)
+        self.wait_for(3)
         cls_btn = modal.find_element_by_xpath(
             './/button[@class="close text-right"]')
         cls_btn.click()

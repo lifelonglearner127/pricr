@@ -26,12 +26,28 @@ class XoomEnergySpider(SpiderBase):
     def get_elements(self) -> Generator[Tuple[WebElement], None, None]:
         self.wait_for(3)
         container = self.wait_until(
-            '//section[@id="secRates"]',
+            '//div[@id="cpTopMain_cpMain_upnlMain"]',
             by=By.XPATH
         )
-        elements = container.find_elements_by_xpath(
-            './/div[@class="dashboard-content"]/div[1]/div/div/div/div[1]')
-        yield tuple(elements)
+        for i in range(4):
+            plan_tabs = container.find_element_by_xpath(
+                './/ul[@id="cpTopMain_cpMain_ucProductChart_ulTabCount"]/' +
+                'li[{}]'.format(i+1)
+            )
+            try:
+                plan_tabs.click()
+                self.wait_for(1)
+            except Exception:
+                cls_btn = self.client.find_element_by_id(
+                    'cpTopMain_ucAlertMessage_btnCloseAlert')
+                cls_btn.click()
+                plan_tabs.click()
+                self.wait_for(1)
+
+            elements = container.find_elements_by_xpath(
+                './/div[@class="dashboard-content"]//' +
+                'div[contains(@class,"active")]/div/div')
+            yield tuple(elements)
 
     def analyze_element(self, el: WebElement):
 

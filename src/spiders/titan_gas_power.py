@@ -45,8 +45,16 @@ class TitanGasPowerSpider(SpiderBase):
             '//div[@id="divElectricPlans"]/div')
         yield tuple(elements)
 
-    def analyze_element(self, el: WebElement):
+    def __get_efl_link(self, el: WebElement, i: int):
+        try:
+            el.find_element_by_xpath(
+                './/div[@class="planContractDoc"]/div/div[{}]/'.format(i) +
+                'a[contains(text(), "Electricity")]')
+            return True
+        except Exception:
+            return False
 
+    def analyze_element(self, el: WebElement):
         # Popping up learn more details
         detail_link = el.find_element_by_xpath(
             './/div[@id="divPlanButtons"]/div/a')
@@ -62,9 +70,18 @@ class TitanGasPowerSpider(SpiderBase):
 
         term = re.search(r"\b\d+\b", product_name).group()
         self.wait_for(2)
-        efl_element = el.find_element_by_xpath(
-            './/div[@class="planContractDoc"]/div/div[2]/a'
-        )
+        if self.__get_efl_link(el, 1):
+            efl_element = el.find_element_by_xpath(
+                    './/div[@class="planContractDoc"]/div/div[1]/a'
+                )
+        elif self.__get_efl_link(el, 2):
+            efl_element = el.find_element_by_xpath(
+                './/div[@class="planContractDoc"]/div/div[2]/a'
+            )
+        else:
+            efl_element = el.find_element_by_xpath(
+                './/div[@class="planContractDoc"]/div/div[3]/a'
+            )
         self.client.execute_script("arguments[0].click();", efl_element)
         close_btn = el.find_element_by_xpath(
             '//span[@id="btnExpandPlan"]')

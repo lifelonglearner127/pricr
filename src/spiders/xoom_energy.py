@@ -2,10 +2,10 @@ import re
 from typing import Tuple, Generator
 from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.common.by import By
-from ..libs.engines import SpiderBase
+from ..libs.engines import SpiderBase, OneOffMixin
 
 
-class XoomEnergySpider(SpiderBase):
+class XoomEnergySpider(OneOffMixin, SpiderBase):
     name = "Xoom Energy"
     REP_ID = "XOOM"
     base_url = 'https://xoomenergy.com/'

@@ -1,39 +1,21 @@
 import re
-from typing import Tuple, Generator, List
+from typing import Tuple, Generator
 from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.common.by import By
-from src.libs.models import Entry
-from ..libs.engines import SpiderBase
+from ..libs.engines import SpiderBase, OneOffMixin
 
 
-class TitanGasPowerSpider(SpiderBase):
+class TitanGasPowerSpider(OneOffMixin, SpiderBase):
     name = "Titan Gas and Power"
     REP_ID = "TITAN"
-    base_url = (
+    base_url = \
         "https://rates.cleanskyenergy.com:8443/rates/index?zipcode={zip}"
-    )
 
-    def run(self, zipcodes: List[str]) -> List[Entry]:
-        for zipcode in zipcodes:
-            url = self.base_url.format(zip=zipcode)
-            self.log("Visiting %s" % url)
-            self.client.get(url)
-            self.log("Starting for %s..." % zipcode)
-            self.extract(zipcode)
-        self.log("Finished!")
-        return self.data
+    def get_base_url(self, zipcode: str) -> str:
+        return self.base_url.format(zip=zipcode)
 
-    def extract(self, zipcode: str) -> List[Entry]:
-        self.log("Searching with zip code - %s" % zipcode)
-        for elements in self.get_elements():
-            for element in elements:
-                entry = self.convert_to_entry(
-                    zipcode, self.analyze_element(element))
-                self.log("Downloading for <%s>..." % entry.product_name)
-                if self.wait_until_download_finish():
-                    entry.filename = self.rename_downloaded(
-                        zipcode, entry.product_name)
-                self.data.append(entry)
+    def submit_zipcode(self, zipcode: str):
+        pass
 
     def get_elements(self) -> Generator[Tuple[WebElement], None, None]:
         self.wait_for(3)

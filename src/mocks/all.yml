@@ -51,3 +51,13 @@ JE:
   -
     zipcode: 15201
     commodity: gas
+XOOM:
+  - 
+    zipcode: 77016
+    commodity: elec
+  - 
+    zipcode: 77580
+TITAN:
+  - 
+    zipcode: 77016
+    commodity: elec

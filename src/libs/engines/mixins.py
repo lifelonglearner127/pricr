@@ -13,8 +13,8 @@ class OneOffMixin:
             raise Exception("Argment Error.")
 
         for inst in instructions:
-            self.log("Visiting %s" % self.base_url)
-            self.client.get(self.base_url)
+            self.log("Visiting %s" % self.get_base_url(inst.zipcode))
+            self.client.get(self.get_base_url(inst.zipcode))
             self.log(f"Extracting {inst.commodity} for {inst.zipcode}...")
             self.extract(inst.zipcode, inst.commodity)
         self.log("Finished!")

@@ -117,4 +117,7 @@ REP_SPIDER_MAPPING = {
 REP_MULTI_STATE_SPIDER_MAPPING = {
     "DE": DirectEnergySpider,
     "JE": JustEnergySpider,
+    "XOOM": XoomEnergySpider,
+    "EREW": EnergyRewardsSpider,
+    "TITAN": TitanGasPowerSpider,
 }

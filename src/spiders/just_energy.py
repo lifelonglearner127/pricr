@@ -4,9 +4,7 @@ from typing import Tuple, Generator, List
 from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.common.keys import Keys
-# from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import Select
-# from ..libs.models import COMMODITY
 from ..libs.engines import UtilityByCommodityMixin, OneOffMixin, SpiderBase
 
 
@@ -14,19 +12,14 @@ class JustEnergySpider(UtilityByCommodityMixin, OneOffMixin, SpiderBase):
     name = 'Just Energy'
     REP_ID = 'JE'
     base_url = 'https://www.justenergy.com/'
-    # base_url = 'https://justenergy.com/residential-plans' +\
-    #     '#/enrollment/US/IL/SVC/residential-plans'
 
     def submit_zipcode(self, zipcode: str):
         self.wait_for()
         zipcode_element = self.client.find_element_by_xpath(
             '//form//input[@id="zip"]')
-        # submit_button = self.client.find_element_by_xpath(
-        #     '//form//button')
         zipcode_element.clear()
         zipcode_element.send_keys(zipcode)
         zipcode_element.send_keys(Keys.ENTER)
-        # submit_button.click()
 
     def hook_after_zipcode_submit(self):
         self.wait_for(15)
@@ -40,7 +33,6 @@ class JustEnergySpider(UtilityByCommodityMixin, OneOffMixin, SpiderBase):
             return False
 
     def get_commodity_link_elements(self) -> List[WebElement]:
-        # self.wait_for(2)
         elements = self.client.find_elements_by_css_selector(
             'div.commodity-selector a.electricity,' +
             'div.commodity-selector a.natural-gas'
@@ -132,9 +124,6 @@ class JustEnergySpider(UtilityByCommodityMixin, OneOffMixin, SpiderBase):
             self.log("No need to expan view details. Skipping...")
 
         try:
-            # efl_download_modal_button = el.find_element_by_xpath(
-            #     './/a[@class="plan-documents"]' +
-            #     '[contains(text(), "Electricity Facts Label")]')
             efl_download_modal_button = el.find_element_by_xpath(
                 './/a[@class="plan-documents"]' +
                 '[contains(., "Electricity Facts Label")]' +
@@ -143,10 +132,6 @@ class JustEnergySpider(UtilityByCommodityMixin, OneOffMixin, SpiderBase):
             efl_download_modal_button.click()
 
             self.wait_for(10)
-            # efl_download_btn = self.wait_until(
-            #     "//div[contains(@class, 'modal-dialog')]" +
-            #     "//div[@class='text-center']/a",
-            #     By.XPATH, timeout=30)
             efl_download_btn = self.client.find_element_by_xpath(
                 "//div[contains(@class, 'modal-dialog')]" +
                 "//div[@class='text-center']/a")
@@ -168,10 +153,6 @@ class JustEnergySpider(UtilityByCommodityMixin, OneOffMixin, SpiderBase):
             view_detail_button.click()
         except NoSuchElementException:
             pass
-            # view_detail_button = self.client.find_element_by_css_selector(
-            #     'div.modal-dialog div.modal-header button.close')
-            # view_detail_button.click()
-            # self.wait_for()
 
         return {
             'term': term,

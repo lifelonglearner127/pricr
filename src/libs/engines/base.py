@@ -81,6 +81,9 @@ class SpiderBase(SpiderInterface):
     def client(self) -> Browser:
         return self._client
 
+    def get_base_url(self, zipcode: str) -> str:
+        return self.base_url
+
     def get_commodity(self) -> str:
         return COMMODITY.electricity
 
@@ -268,8 +271,8 @@ class SpiderBase(SpiderInterface):
 
     def run(self, zipcodes: List[str]) -> List[Entry]:
         for zipcode in zipcodes:
-            self.log("Visiting %s" % self.base_url)
-            self.client.get(self.base_url)
+            self.log("Visiting %s" % self.get_base_url(zipcode))
+            self.client.get(self.get_base_url(zipcode))
             self.log("Starting with %s..." % zipcode)
             self.extract(zipcode)
         self.log("Finished!")

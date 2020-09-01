@@ -70,8 +70,8 @@ class XoomEnergySpider(OneOffMixin, SpiderBase):
         else:
             term = 1
         self.wait_for(2)
-        efl_element = self.client.find_element_by_xpath(
-            '//ul[@class="utility-documents"]/li[6]/a'
+        efl_element = el.find_element_by_xpath(
+            './/ul[@class="utility-documents"]/li[6]/a'
         )
         efl_url = efl_element.get_attribute('href')
         self.client.get(efl_url)

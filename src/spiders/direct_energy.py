@@ -124,7 +124,7 @@ class DirectEnergySpider(OneOffMixin, SpiderBase):
             return []
 
     def parse_plans_page(self, zipcode: str) -> None:
-        self.wait_for(2)
+        self.wait_for(5)
         super().parse_plans_page(zipcode)
 
     def get_commodity_link_elements(self) -> List[WebElement]:

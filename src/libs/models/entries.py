@@ -1,3 +1,4 @@
+import re
 from typing import Tuple
 
 
@@ -28,7 +29,7 @@ class Entry:
         self.rep_id = rep_id.upper()
         self.zipcode = zipcode
         self.term = int(term)
-        self.price = float(price)
+        self.price = float(re.search(r'\d+(\.\d+)?', price).group())
         self.product_name = product_name
         self.filename = filename
         if commodity not in [

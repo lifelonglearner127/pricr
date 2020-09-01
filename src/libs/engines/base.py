@@ -32,13 +32,18 @@ class SpiderInterface(object):
     def analyze_element(self, el: WebElement) -> dict:
         raise NotImplementedError()
 
-    def extract(self, zipcode: str) -> None:
+    def extract(
+        self, zipcode: str, commodity: str = COMMODITY.electricity
+    ) -> None:
         raise NotImplementedError()
 
     def check_if_multiple_utilities(self) -> bool:
         return False
 
     def check_if_multiple_commodities(self) -> bool:
+        return False
+
+    def check_if_service_unavailable(self) -> bool:
         return False
 
 
@@ -75,6 +80,9 @@ class SpiderBase(SpiderInterface):
     @property
     def client(self) -> Browser:
         return self._client
+
+    def get_base_url(self, zipcode: str) -> str:
+        return self.base_url
 
     def get_commodity(self) -> str:
         return COMMODITY.electricity
@@ -177,7 +185,9 @@ class SpiderBase(SpiderInterface):
                             zipcode, entry.product_name)
                 self.data.append(entry)
 
-    def extract(self, zipcode: str) -> None:
+    def extract(
+        self, zipcode: str, commodity: str = COMMODITY.electricity
+    ) -> None:
         """NOTE: Started with submitting a zip code
         When multiple utilies appear, please make sure to submit zipcode.
         """
@@ -186,6 +196,12 @@ class SpiderBase(SpiderInterface):
         self.log("Searching with zip code - %s" % zipcode)
         self.submit_zipcode(zipcode)
         self.hook_after_zipcode_submit()
+
+        if self.check_if_service_unavailable():
+            self.log(
+                f"Service is not available for {zipcode}.",
+                level=logging.WARNING)
+            return
 
         if self.check_if_multiple_utilities():
             for _ in self.iter_all_utilities(zipcode):
@@ -255,8 +271,8 @@ class SpiderBase(SpiderInterface):
 
     def run(self, zipcodes: List[str]) -> List[Entry]:
         for zipcode in zipcodes:
-            self.log("Visiting %s" % self.base_url)
-            self.client.get(self.base_url)
+            self.log("Visiting %s" % self.get_base_url(zipcode))
+            self.client.get(self.get_base_url(zipcode))
             self.log("Starting with %s..." % zipcode)
             self.extract(zipcode)
         self.log("Finished!")
@@ -327,42 +343,3 @@ class SpiderBase(SpiderInterface):
 
     def is_element_clickable(self, identifier: str, by: str = By.ID) -> bool:
         return EC.element_to_be_clickable((by, identifier))
-
-
-class UtilityByCommoditySpider(SpiderBase):
-    def analyze_single_commodity(self, zipcode: str):
-        self.log(
-            "Analyzing %d-th commodity(%s)..." % (
-                self.current_commodity_index,
-                self.get_commodity()
-            ))
-        self.current_utility_index = 0
-
-        self.wait_for()
-
-        if self.check_if_multiple_utilities():
-            for _ in self.iter_all_utilities(zipcode):
-                self.log(
-                    "Analyzing %d-th utility" % self.current_utility_index)
-                self.parse_plans_page(zipcode)
-                self.current_utility_index += 1
-        else:
-            self.parse_plans_page(zipcode)
-
-    def extract(self, zipcode: str) -> None:
-        """NOTE: Started with submitting a zip code
-        When multiple utilies appear, please make sure to submit zipcode.
-        """
-        self.current_utility_index = 0
-        self.current_commodity_index = 0
-        self.log("Searching with zip code - %s" % zipcode)
-        self.submit_zipcode(zipcode)
-        self.hook_after_zipcode_submit()
-
-        if self.check_if_multiple_commodities():
-            for _ in self.iter_all_commodity_pages(zipcode):
-                self.analyze_single_commodity(zipcode)
-                self.current_commodity_index += 1
-                self.wait_for(2)
-        else:
-            self.analyze_single_commodity(zipcode)

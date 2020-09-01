@@ -128,7 +128,9 @@ class JustEnergySpider(UtilityByCommodityMixin, OneOffMixin, SpiderBase):
                 './/a[@class="plan-documents"]' +
                 '[contains(., "Electricity Facts Label")]' +
                 '|.//a[@class="plan-documents"]' +
-                '[contains(., "Contract Summary")]')
+                '[contains(., "Contract Summary")]'
+                '|.//a[@class="plan-documents"]' +
+                '[contains(., "Terms of Service")]')
             efl_download_modal_button.click()
 
             self.wait_for(10)

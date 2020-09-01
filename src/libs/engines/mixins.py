@@ -77,12 +77,13 @@ class UtilityByCommodityMixin:
     ITER_ALL: bool = False
 
     def analyze_single_commodity(self, zipcode: str):
-        self.log(
-            "Analyzing %d-th commodity(%s)..." % (
-                self.current_commodity_index,
-                self.get_commodity()
-            ))
-        self.current_utility_index = 0
+        if self.ITER_ALL:
+            self.log(
+                "Analyzing %d-th commodity(%s)..." % (
+                    self.current_commodity_index,
+                    self.get_commodity()
+                ))
+            self.current_utility_index = 0
 
         self.wait_for()
 

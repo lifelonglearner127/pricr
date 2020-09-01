@@ -30,19 +30,24 @@ class XoomEnergySpider(OneOffMixin, SpiderBase):
             by=By.XPATH
         )
         for i in range(4):
-            plan_tabs = container.find_element_by_xpath(
+            plan_tab = container.find_element_by_xpath(
                 './/ul[@id="cpTopMain_cpMain_ucProductChart_ulTabCount"]/' +
                 'li[{}]'.format(i+1)
             )
+
+            if 'featured' in plan_tab.text.lower() or\
+                    'renewable' in plan_tab.text.lower():
+                continue
+
             try:
-                plan_tabs.click()
-                self.wait_for(1)
+                plan_tab.click()
             except Exception:
                 cls_btn = self.client.find_element_by_id(
                     'cpTopMain_ucAlertMessage_btnCloseAlert')
                 cls_btn.click()
-                plan_tabs.click()
-                self.wait_for(1)
+                plan_tab.click()
+
+            self.wait_for(3)
 
             elements = container.find_elements_by_xpath(
                 './/div[@class="dashboard-content"]//' +

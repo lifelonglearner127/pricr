@@ -120,4 +120,5 @@ REP_MULTI_STATE_SPIDER_MAPPING = {
     "XOOM": XoomEnergySpider,
     "EREW": EnergyRewardsSpider,
     "TITAN": TitanGasPowerSpider,
+    "VIR": ViridianEnergySpider,
 }

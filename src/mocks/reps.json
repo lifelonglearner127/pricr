@@ -86,5 +86,133 @@
     "SPRK": {
         "name": "Spark Energy",
         "website": "www.sparkenergy.com/"
+    },
+    "CPL": {
+        "name": "CPLR Energy",
+        "website": "www.cplretailenergy.com/"
+    },
+    "THINK": {
+        "name": "Think Energy",
+        "website": "www.mythinkenergy.com/"
+    },
+    "GPLUS": {
+        "name": "GRID Plus Energy",
+        "website": "grid-enroll.smartgridcis.net/"
+    },
+    "WTU": {
+        "name": "WTU Energy",
+        "website": "www.wturetailenergy.com/"
+    },
+    "APGE": {
+        "name": "APGE",
+        "website": "www.apge.com/"
+    },
+    "FST": {
+        "name": "First Choice Power",
+        "website": "https://www.firstchoicepower.com/"
+    },
+    "POGO": {
+        "name": "Pogo Energy",
+        "website": "https://my.pogoenergy.com/"
+    },
+    "PLSE": {
+        "name": "Pulse Energy",
+        "website": "www.pulsepowertexas.com/"
+    },
+    "E2GO": {
+        "name": "Energty ToGo",
+        "website": "myenergytogo.com/"
+    },
+    "LSTR": {
+        "name": "Lonestar Energy",
+        "website": "lonestarenergytx.com/"
+    },
+    "NEWP": {
+        "name": "New Power Energy",
+        "website": "newpowertx.com/"
+    },
+    "PWRN": {
+        "name": "Power Next",
+        "website": "mypowernext.com/"
+    },
+    "V247": {
+        "name": "V247 Energy",
+        "website": "v247power.com/"
+    },
+    "TOWN": {
+        "name": "TOWN SQUARE ENERGY ",
+        "website": "https://townsquareenergy.com/"
+    },
+    "STRM": {
+        "name": "Stream Energy ",
+        "website": "www.mystream.com/"
+    },
+    "SUMM": {
+        "name": "SUMMER ENERGY",
+        "website": "https://www.summerenergy.com/"
+    },
+    "ENTR": {
+        "name": "ENTRUST ENERGY",
+        "website": "http://www.entrustenergy.com"
+    },
+    "GME": {
+        "name": "Green Mountain Energy ",
+        "website": "www.greenmountainenergy.com/"
+    },
+    "VIR": {
+        "name": "Viridian Energy",
+        "website": "http://www.viridian.com/"
+    },
+    "TOM": {
+        "name": "TOMORROW ENERGY",
+        "website": "https://tomorrowenergy.com/"
+    },
+    "AMIG": {
+        "name": "AMIGO ENERGY",
+        "website": "https://townsquareenergy.com/"
+    },
+    "TARA": {
+        "name": "TARA ENERGY",
+        "website": "https://townsquareenergy.com/"
+    },
+    "LIB": {
+        "name": "Liberty Power",
+        "website": "https://www.libertypowercorp.com/"
+    },
+    "IBER": {
+        "name": "Iberdrola",
+        "website": "https://iberdrolatexas.com/"
+    },
+    "WIND": {
+        "name": "WINDROSE ENERGY",
+        "website": "https://www.windroseenergy.com/"
+    },
+    "BULB": {
+        "name": "Bulb",
+        "website": "https://www.bulb.com/"
+    },
+    "MIDA": {
+        "name": "MIDAMERICAN ENERGY SERVICES",
+        "website": "http://www.midamericanenergyservices.com/"
+    },
+    "POT": {
+        "name": "POWER OF TEXAS",
+        "website": "http://www.poweroftexas.com"
+    },
+    "EREW": {
+        "name": "Power Rewards",
+        "website": "https://www.credoenergy.com/"
+    },
+    "XOOM": {
+        "name": "Xoom Energy",
+        "website": "https://xoomenergy.com/"
+    },
+    "CLEAR": {
+        "name": "CLEARVIEW ENERGY",
+        "website": "https://www.clearviewenergy.com/"
+    },
+    "TITAN": {
+        "name": "Titan Gas and Power",
+        "website": "https://rates.cleanskyenergy.com/"
     }
 }

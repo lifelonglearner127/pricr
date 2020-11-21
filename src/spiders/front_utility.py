@@ -1,15 +1,13 @@
-import re
-from typing import Tuple, Generator, List
-from selenium.webdriver.remote.webelement import WebElement
+from typing import List
 from selenium.webdriver.common.by import By
 from src.libs.models import Entry
 from .gexa_energy import GexaEnergySpider
 
 
 class FrontUtilSpider(GexaEnergySpider):
-    name = 'Frontier Utilities'
-    REP_ID = 'FRT'
-    base_url = 'https://newenroll.frontierutilities.com/Home/Index?Zip={zip}'
+    name = "Frontier Utilities"
+    REP_ID = "FRT"
+    base_url = "https://newenroll.frontierutilities.com/Home/Index?Zip={zip}"
 
     def run(self, zipcodes: List[str]) -> List[Entry]:
         for zipcode in zipcodes:
@@ -25,9 +23,7 @@ class FrontUtilSpider(GexaEnergySpider):
         """Switch to show all the plans
         """
         show_all_link = self.wait_until(
-            '//div[@id="tabs"]/ul/li[6]/a',
-            by=By.XPATH
-        )
+            '//div[@id="tabs"]/ul/li[6]/a', by=By.XPATH)
         show_all_link.click()
         self.wait_until_document_ready()
 
@@ -38,19 +34,16 @@ class FrontUtilSpider(GexaEnergySpider):
         option_1k_link.click()
         self.wait_until_document_ready()
         self.wait_for(3)
-    
+
     def extract(self, zipcode: str) -> List[Entry]:
         self.log("Searching with zip code - %s" % zipcode)
         self.hook_after_zipcode_submit()
         for elements in self.get_elements():
             for element in elements:
                 entry = self.convert_to_entry(
-                    zipcode,
-                    self.analyze_element(element)
-                )
+                    zipcode, self.analyze_element(element))
                 self.log("Downloading for <%s>..." % entry.product_name)
                 if self.wait_until_download_finish():
                     entry.filename = self.rename_downloaded(
-                        zipcode, entry.product_name
-                    )
+                        zipcode, entry.product_name)
                 self.data.append(entry)

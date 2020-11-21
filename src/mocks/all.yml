@@ -1,0 +1,91 @@
+DE:
+  - 
+    zipcode: 77016
+    commodity: elec
+  - 
+    zipcode: 77580
+  -
+    zipcode: "06101"
+  -
+    zipcode: 60659
+  -
+    zipcode: 19901
+  -
+    zipcode: "02101"
+  -
+    zipcode: 21201
+    commodity: gas
+  -
+    zipcode: "07039"
+    commodity: gas
+  -
+    zipcode: 44101
+    commodity: gas
+  -
+    zipcode: 15201
+    commodity: gas
+JE:
+  - 
+    zipcode: 77016
+    commodity: elec
+  - 
+    zipcode: 77580
+  -
+    zipcode: "06101"
+  -
+    zipcode: 60659
+    commodity: gas
+  -
+    zipcode: 19901
+  -
+    zipcode: "02101"
+  -
+    zipcode: 21201
+    commodity: gas
+  -
+    zipcode: "07039"
+    commodity: gas
+  -
+    zipcode: 44101
+    commodity: gas
+  -
+    zipcode: 15201
+    commodity: gas
+XOOM:
+  - 
+    zipcode: 77016
+    commodity: elec
+  - 
+    zipcode: 77580
+TITAN:
+  - 
+    zipcode: 77016
+    commodity: elec
+
+VIR:
+  -
+    zipcode: "06001"
+    commodity: elec
+  -
+    zipcode: "06494"
+    commodity: elec
+  -
+    zipcode: "06456"
+    commodity: elec
+  -
+    zipcode: "06533"
+    commodity: elec
+  -
+    zipcode: "06817"
+    commodity: elec
+  -
+    zipcode: "62080"
+  -
+    zipcode: "60015"
+  -
+    zipcode: "61241"
+  -
+    zipcode: "62087"
+  -
+    zipcode: "60901"
+    commodity: gas

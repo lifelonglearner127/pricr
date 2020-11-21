@@ -5,3 +5,4 @@ downloads/*/*
 venv/
 test.py
 debug.json
+debug.yml
